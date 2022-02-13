@@ -1,0 +1,16 @@
+import './topbar.css';
+import 'boxicons';
+
+const TopBar = () => {
+	return (
+		<div className='topbar'>
+			<div className='topbar__inner'>
+				<box-icon name='hot'></box-icon>
+				<div className='topbar__inner-leftControl'></div>
+				<div className='topbar__inner-rightControl'></div>
+			</div>
+		</div>
+	);
+};
+
+export default TopBar;
