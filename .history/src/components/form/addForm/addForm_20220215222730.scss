@@ -1,0 +1,104 @@
+.addForm {
+	--font--size-label: 18px;
+	background-color: transparent;
+	position: relative;
+	text-transform: capitalize;
+
+	&__header {
+		padding: 5px 0px;
+		border-bottom: 1px solid black;
+	}
+
+	&__main {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-direction: column;
+		padding: 5px 0px;
+
+		& > div {
+			width: 100%;
+		}
+
+		&--text {
+			display: flex;
+			flex-direction: column;
+			padding: 12px 12px;
+
+			& > input,
+			textarea {
+				border: none;
+				outline: none;
+				height: 50px;
+
+				&:focus {
+					border-bottom: 1px solid black;
+				}
+			}
+
+			& > input {
+				font-size: 1rem;
+				font-weight: 500;
+			}
+
+			& > textarea {
+				font-family: inherit;
+				font-size: 16px;
+			}
+		}
+
+		&--remind {
+			display: flex;
+			align-items: center;
+			padding: 12px 0px;
+			font-size: var(--font--size-label);
+
+			& p {
+				margin-left: 10px;
+			}
+		}
+
+		&--pickDay,
+		&--pickTime {
+			font-size: var(--font--size-label);
+			padding: 12px 32px;
+
+			&-title {
+				display: flex;
+				& p {
+					margin-left: 10px;
+				}
+			}
+		}
+
+		&--tag {
+			display: flex;
+			flex-direction: column;
+			padding: 12px 0px;
+
+			&-title {
+				display: flex;
+				align-items: center;
+				padding: 12px 0px;
+				font-size: var(--font--size-label);
+
+				& p {
+					margin-left: 10px;
+				}
+			}
+
+			&-list {
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				padding: 20px 32px 0px;
+				& > div {
+					border: 1px solid black;
+					border: radius 5px;
+					padding: 5px;
+					margin: 5px;
+				}
+			}
+		}
+	}
+}

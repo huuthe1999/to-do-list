@@ -1,0 +1,14 @@
+.sidebar {
+	height: 100%;
+	position: fixed;
+	left: -100%;
+	background-color: aqua;
+	width: 0px;
+	overflow-y: auto;
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+	&.active {
+		width: 220px;
+		left: 0;
+	}
+}

@@ -1,0 +1,9 @@
+.addForm {
+	background-color: transparent;
+	position: relative;
+
+	&__header {
+		text-transform: capitalize;
+		border-bottom: 1px solid black;
+	}
+}
