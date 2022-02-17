@@ -1,0 +1,37 @@
+.calendar {
+	--font-size-label: 20px;
+	font-family: inherit;
+	&__header {
+		font-size: var(--font-size-label);
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		padding: 10px 0px;
+		&--title {
+			flex: 1;
+			display: flex;
+			align-items: center;
+
+			& > p {
+				font-weight: 500;
+				margin-left: 10px;
+			}
+		}
+		&--expand {
+			display: flex;
+			align-items: center;
+			margin: 0 12px 0 10px;
+		}
+	}
+	&__content {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}

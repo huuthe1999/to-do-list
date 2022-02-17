@@ -1,0 +1,18 @@
+.calendar {
+	width: 100%;
+	&__header {
+		margin-left: -30px;
+		margin-right: -10px;
+	}
+	&__container {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}

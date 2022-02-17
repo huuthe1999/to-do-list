@@ -1,0 +1,19 @@
+.calendar {
+	width: 100%;
+	&__header {
+		background-color: #0080ff;
+		margin-left: -30px;
+		margin-right: -10px;
+	}
+	&__container {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}

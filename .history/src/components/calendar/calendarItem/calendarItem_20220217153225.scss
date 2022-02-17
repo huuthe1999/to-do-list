@@ -1,0 +1,12 @@
+.calendar__content--item {
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	padding: 24px 16px 5px 5px;
+	cursor: pointer;
+	background-color: transparent;
+
+	&:hover {
+		background: #ececec;
+	}
+}

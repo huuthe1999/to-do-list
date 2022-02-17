@@ -1,0 +1,27 @@
+.calendar {
+	&__header {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		&--title {
+			display: flex;
+			align-items: center;
+		}
+		&--expand {
+			display: flex;
+			align-items: center;
+			align-items: center;
+		}
+	}
+	&__content {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+.calendar {
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		&--title {
+			display: flex;
+		}
+	}
+	&__content {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+.calendar {
+	&__header {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		&--title {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+	&__content {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}

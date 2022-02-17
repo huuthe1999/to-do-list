@@ -1,0 +1,32 @@
+.calendar {
+	&__header {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		&--title {
+			flex: 1;
+			display: flex;
+			align-items: center;
+
+			& > p {
+				font-weight: bold;
+			}
+		}
+		&--expand {
+			display: flex;
+			align-items: center;
+			margin: 0 12px 0 10px;
+		}
+	}
+	&__content {
+		height: auto;
+
+		&--wrapper {
+			display: flex;
+
+			&--inner {
+				width: 100%;
+			}
+		}
+	}
+}
