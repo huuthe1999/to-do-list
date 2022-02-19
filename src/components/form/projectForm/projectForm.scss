@@ -1,25 +1,10 @@
-.addForm {
+.projectForm {
 	--font-size-label: 20px;
 	background-color: transparent;
 	position: relative;
 	text-transform: capitalize;
 	padding: 16px;
 
-	// &__close {
-	// 	position: absolute;
-	// 	right: 16px;
-	// 	top: 16px;
-	// 	width: 24px;
-	// 	height: 24px;
-	// 	text-align: center;
-	// 	cursor: pointer;
-	// 	padding: 2px;
-	// 	font-size: var(--font-size-label);
-	// 	border-radius: 3px;
-	// 	&:hover {
-	// 		background-color: #eee;
-	// 	}
-	// }
 	&__header {
 		display: flex;
 		justify-content: space-between;
@@ -51,7 +36,6 @@
 		justify-content: center;
 		align-items: flex-start;
 		flex-direction: column;
-		padding: 5px 0px;
 
 		& > div {
 			width: 100%;
@@ -60,31 +44,30 @@
 		&--text {
 			display: flex;
 			flex-direction: column;
-			padding: 12px 12px;
+			padding: 0px 12px;
 
-			& > input,
-			textarea {
-				border: none;
+			& > input {
+				border: 1px solid #ddd;
+				border-radius: 5px;
 				outline: none;
-				height: 50px;
+				height: 35px;
+				padding-left: 4px;
+				transition: box-shadow border 0.3s ease;
 
 				&:focus {
-					border-bottom: 1px solid black;
+					border-color: transparent;
+					box-shadow: 0 0 0 1px #1f60c2, 0 0 0 4px #dceaff;
 				}
 			}
 
 			& > input {
-				font-size: 1rem;
+				font-size: 20px;
 				font-weight: 500;
-			}
-
-			& > textarea {
-				font-family: inherit;
-				font-size: 16px;
 			}
 		}
 
-		&--remind {
+		&--title {
+			width: 100%;
 			display: flex;
 			align-items: center;
 			padding: 12px 0px;
@@ -95,59 +78,20 @@
 			}
 		}
 
-		&--pickDay,
-		&--pickTime {
-			font-size: var(--font-size-label);
-			padding: 12px 32px;
-
-			&-title {
-				display: flex;
-				& p {
-					margin-left: 10px;
-				}
-			}
+		&--pickColorWrapper {
+			padding: 12px;
 		}
-
-		&--tag {
-			display: flex;
-			flex-direction: column;
-			padding: 12px 0px;
-
-			&-title {
-				display: flex;
-				align-items: center;
-				margin-bottom: 5px;
-				font-size: var(--font-size-label);
-
-				& p {
-					margin-left: 10px;
-				}
-			}
-
-			&-list {
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-				padding: 12px 32px 0px;
-				font-size: 16px;
-				& > div {
-					border: 1px solid #0080ff;
-					border-radius: 5px;
-					padding: 5px;
-					margin: 5px;
-					cursor: pointer;
-
-					&.active {
-						color: #fff;
-						background-color: #0080ff;
-						transition: all 0.2s ease-in;
-					}
-				}
+		&--pickColor {
+			transition: all 0.2s ease-in;
+			&.active {
+				height: 160px;
+				margin-bottom: 30px;
 			}
 		}
 	}
 
 	&__footer {
+		background-color: #fff;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;

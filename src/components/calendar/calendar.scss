@@ -8,7 +8,7 @@
 		padding: 10px 0px;
 
 		&:hover &--expand {
-			background-color: #eee;
+			background-color: #bdbdbd;
 		}
 
 		&--title {
@@ -30,6 +30,7 @@
 			transition: all 0.2s ease-in-out;
 
 			& > span {
+				padding: 3px;
 				display: flex;
 				justify-content: center;
 				align-items: center;

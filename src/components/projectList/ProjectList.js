@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
-import { IoAdd, IoColorPaletteOutline, IoPencilOutline } from 'react-icons/io5';
+import { IoColorPaletteOutline, IoPencil } from 'react-icons/io5';
+import AddProjectForm from '../form/projectForm/AddProjectForm';
 import ProjectItem from './projectItem/ProjectItem';
 import './projectList.scss';
 
 const projectList = [
 	{
 		id: 1,
-		name: 'work',
+		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
 		size: 4,
 	},
 	{
 		id: 2,
-		name: 'personal',
+		name: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
 		size: 7,
 	},
 	{
@@ -22,10 +23,14 @@ const projectList = [
 	},
 ];
 const ProjectList = () => {
-	const [showEdit, setShowEdit] = useState(true);
-	const [edit, setEdit] = useState(true);
+	const [showMenu, setShowMenu] = useState(true);
+	const [showEdit, setShowEdit] = useState(false);
 
-	const editColorActive = edit ? '#1565c0' : 'inherit';
+	// const [edit, setEdit] = useState(true);
+
+	const editActiveStyle = showEdit
+		? { color: '#058527', backgroundColor: '#e0e0e0' }
+		: undefined;
 	return (
 		<div className='projectList'>
 			<div className='projectList__header'>
@@ -34,14 +39,14 @@ const ProjectList = () => {
 					<p>Projects</p>
 				</div>
 				<div className='projectList__header--expand'>
-					{showEdit && projectList.length > 0 && (
-						<span onClick={() => setEdit(!edit)}>
-							<IoPencilOutline color={editColorActive} />
+					{showMenu && projectList.length > 0 && (
+						<span
+							style={editActiveStyle}
+							onClick={() => setShowEdit(!showEdit)}>
+							<IoPencil />
 						</span>
 					)}
-					<span>
-						<IoAdd />
-					</span>
+					<AddProjectForm />
 					<span>
 						<BsCaretUp />
 					</span>
@@ -52,7 +57,11 @@ const ProjectList = () => {
 					<div className='projectList__content--wrapper--inner'>
 						<ul className='projectList__content--list'>
 							{projectList.map(({ id, ...rest }) => (
-								<ProjectItem key={id} {...rest} edit={edit} />
+								<ProjectItem
+									key={id}
+									{...rest}
+									edit={showEdit}
+								/>
 							))}
 						</ul>
 					</div>

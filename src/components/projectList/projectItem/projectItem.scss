@@ -1,4 +1,5 @@
 .projectList__content--item {
+	min-height: 38px;
 	border-radius: 5px;
 	display: flex;
 	align-items: center;
@@ -8,61 +9,91 @@
 	&.notEdit {
 		cursor: pointer;
 	}
-	&-icon {
-		margin-right: 15px;
-		margin-left: 11.5px;
-		position: relative;
 
-		&::before {
-			position: absolute;
-			content: '';
-			top: 50%;
-			left: 50%;
-			width: 10px;
-			height: 10px;
-			transform: translate(-50%, -50%);
-			background-color: rgb(128, 14, 14);
-			border-radius: 50%;
-		}
+	& > p {
+		margin-left: 10px;
+		flex: 12;
+		word-break: break-all;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		cursor: pointer;
+	}
+	&-icon {
+		margin-left: 7px;
+		position: relative;
+		width: 10px;
+		height: 10px;
+		display: block;
+		background-color: rgb(146, 23, 23);
+		border-radius: 50%;
+		// &::before {
+		// 	position: absolute;
+		// 	content: '';
+		// 	top: 50%;
+		// 	left: 50%;
+		// 	width: 10px;
+		// 	height: 10px;
+		// 	transform: translate(-50%, -50%);
+		// 	background-color: rgb(128, 14, 14);
+		// 	border-radius: 50%;
+		// }
 	}
 	&:hover {
-		background: #ececec;
+		background: #eeeeee;
 	}
 
 	&-content {
-		flex-shrink: 1;
+		flex: 1;
+		margin-left: 15px;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		& > p {
-			cursor: pointer;
+		// & > p {
+		// 	max-width: calc(100% - 86px);
+		// 	word-break: break-all;
+		// 	text-overflow: ellipsis;
+		// 	white-space: nowrap;
+		// 	overflow: hidden;
+		// 	cursor: pointer;
+		// }
+		& > small {
+			padding: 3px;
 		}
 	}
 
 	&-actions {
-		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		& span {
-			margin-left: 10px;
+
+		& > span {
+			margin-left: 14px;
 			margin-right: -4px;
 			cursor: pointer;
 			border-radius: 50%;
-			padding: 4px;
-			width: 24px;
-			height: 24px;
+			padding: 3px;
+			width: 20px;
+			height: 20px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			background-color: #e0e0e0;
+
+			&:first-child:hover {
+				background-color: #058527;
+				color: #fff;
+			}
+
+			&:last-child:hover {
+				background-color: #d50000;
+				color: #fff;
+			}
 
 			& * {
 				width: 100%;
 				height: 100%;
-			}
-			&:hover {
-				background-color: rgb(165, 9, 9);
 			}
 		}
 	}

@@ -11,18 +11,21 @@ import CalendarItem from './calendarItem/CalendarItem';
 const calendarList = [
 	{
 		id: 1,
-		name: 'Today',
+		name: 'Today dwdwdwdwdw wdwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww wdwdwdwdwddwdwdwd',
 		icon: <IoCalendarClearOutline size='24px' color='#246fe0' />,
+		size: 0,
 	},
 	{
 		id: 2,
 		name: 'Tomorrow',
 		icon: <IoTodayOutline size='24px' color='#058527' />,
+		size: 8,
 	},
 	{
 		id: 3,
 		name: 'Next Week',
 		icon: <IoCalendarOutline size='24px' color='#692fc2' />,
+		size: 12,
 	},
 ];
 const Calendar = () => {
@@ -43,12 +46,8 @@ const Calendar = () => {
 				<div className='calendar__content--wrapper'>
 					<div className='calendar__content--wrapper--inner'>
 						<ul className='calendar__content--list'>
-							{calendarList.map(({ id, name, icon }) => (
-								<CalendarItem
-									key={id}
-									name={name}
-									icon={icon}
-								/>
+							{calendarList.map(({ id, ...rest }) => (
+								<CalendarItem key={id} {...rest} />
 							))}
 						</ul>
 					</div>
