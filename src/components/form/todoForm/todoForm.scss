@@ -1,10 +1,10 @@
-.addForm {
+.todoForm {
 	--font-size-label: 20px;
 	background-color: transparent;
 	position: relative;
 	text-transform: capitalize;
 	padding: 16px;
-
+	max-width: 450px;
 	// &__close {
 	// 	position: absolute;
 	// 	right: 16px;
@@ -130,12 +130,20 @@
 				flex-wrap: wrap;
 				padding: 12px 32px 0px;
 				font-size: 16px;
-				& > div {
+				max-height: 120px;
+				overflow: hidden auto;
+				& div {
 					border: 1px solid #0080ff;
 					border-radius: 5px;
 					padding: 5px;
 					margin: 5px;
 					cursor: pointer;
+
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+
+					text-align: center;
 
 					&.active {
 						color: #fff;

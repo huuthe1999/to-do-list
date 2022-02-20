@@ -1,0 +1,69 @@
+.todoItem {
+	cursor: pointer;
+	height: 90px;
+	margin-bottom: 10px;
+	padding: 0.5rem 0.8rem;
+	&__container {
+		padding: 0 0.5rem;
+		display: flex;
+		align-items: center;
+		height: 100%;
+		border-radius: 5px;
+		box-shadow: -2px 1px 12px 3px rgba(84, 82, 82, 0.75);
+		-webkit-box-shadow: -2px 1px 12px 3px rgba(84, 82, 82, 0.75);
+		-moz-box-shadow: -2px 1px 12px 3px rgba(84, 82, 82, 0.75);
+
+		&--contentWrapper {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+		&--content {
+			position: relative;
+			flex: 1;
+			margin: 10px;
+			&-line {
+				background-color: #bebebe;
+				height: 1px;
+				position: absolute;
+				width: 0;
+				top: 25%;
+				transition: width 0.3s ease-in-out;
+				&.line-through {
+					width: 100%;
+				}
+			}
+
+			& > span {
+				color: #918e8e;
+				font-size: 13px;
+			}
+		}
+
+		&--actions {
+			width: 30px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+
+			&:hover {
+				transform: scale(0.9);
+				background-color: #e0e0e0;
+				color: red;
+			}
+		}
+		// &:hover &--delete {
+		// 	visibility: visible;
+		// 	opacity: 1;
+		// }
+
+		// &--delete {
+		// 	visibility: hidden;
+		// 	opacity: 0;
+		// 	transition: all 0.3s ease-in-out;
+		// }
+	}
+}

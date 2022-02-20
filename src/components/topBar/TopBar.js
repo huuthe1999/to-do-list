@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import {
-	RiAddLine,
 	RiHomeLine,
 	RiMenuLine,
 	RiNotification2Line,
@@ -8,11 +6,9 @@ import {
 	RiSearchLine,
 } from 'react-icons/ri';
 import Avatar from '../../assets/images/avatar.png';
-import AddForm from '../form/addForm/AddForm';
-import Modal from '../modal/Modal';
+import AddTodoForm from '../form/todoForm/AddTodoForm';
 import './topbar.scss';
 const TopBar = () => {
-	const [modal, setShowModal] = useState(false);
 	return (
 		<header className='topbar'>
 			<div className='topbar__inner'>
@@ -20,7 +16,6 @@ const TopBar = () => {
 					<button className='topbar__button leftControl'>
 						<RiMenuLine className='topbar__button-icon' />
 					</button>
-
 					<button className='topbar__button leftControl'>
 						<RiHomeLine className='topbar__button-icon' />
 					</button>
@@ -30,15 +25,7 @@ const TopBar = () => {
 					</div>
 				</div>
 				<div className='topbar__inner-rightControl'>
-					<Modal showModal={modal} setShowModal={setShowModal}>
-						<AddForm setShowModal={setShowModal} />
-					</Modal>
-					<button className='topbar__button rightControl'>
-						<RiAddLine
-							className='topbar__button-icon'
-							onClick={() => setShowModal(true)}
-						/>
-					</button>
+					<AddTodoForm />
 					<button className='topbar__button rightControl'>
 						<RiQuestionLine className='topbar__button-icon' />
 					</button>

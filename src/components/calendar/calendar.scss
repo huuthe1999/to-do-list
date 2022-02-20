@@ -1,5 +1,6 @@
 .calendar {
 	--font-size-label: 20px;
+	margin-bottom: 10px;
 	&__header {
 		font-size: var(--font-size-label);
 		display: flex;

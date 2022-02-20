@@ -12,6 +12,12 @@ const SideBar = () => {
 					</div>
 					<div className='sidebar__layout-content'>
 						<Calendar />
+						<hr
+							style={{
+								height: '2px',
+								backgroundColor: 'rgba(8, 41, 228, 0.2)',
+							}}
+						/>
 						<ProjectList />
 					</div>
 					<div className='sidebar__layout-footer'>Footer sidebar</div>

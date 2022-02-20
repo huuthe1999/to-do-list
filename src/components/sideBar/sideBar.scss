@@ -4,8 +4,8 @@
 	height: 100%;
 	background-color: #fafafa;
 	min-width: 260px;
-	width: 350px;
-	// flex-basis: 350px;
+
+	flex: 1;
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 	&__inner {
