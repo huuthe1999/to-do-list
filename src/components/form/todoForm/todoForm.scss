@@ -2,7 +2,7 @@
 	--font-size-label: 20px;
 	background-color: transparent;
 	position: relative;
-	text-transform: capitalize;
+	// text-transform: capitalize;
 	padding: 16px;
 	max-width: 450px;
 	// &__close {
@@ -166,12 +166,26 @@
 
 		&-button {
 			margin: 0px 12px;
+			display: flex;
+			align-items: center;
+			height: 100%;
+			padding: 8px;
+			color: #fff;
 			border-radius: 5px;
-			border: 1px solid black;
-			padding: 5px;
+			&:hover {
+				filter: brightness(1.2);
+			}
 			&:first-child {
-				background-color: rgb(150, 36, 36);
+				background-color: #0091ea;
 				cursor: not-allowed;
+			}
+			&:not(:first-child) {
+				background-color: transparent;
+				color: rgb(0, 0, 0);
+				border: 1px solid black;
+				&:hover {
+					background-color: #bebebe;
+				}
 			}
 		}
 	}

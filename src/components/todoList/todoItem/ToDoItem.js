@@ -6,6 +6,7 @@ import {
 	BsTrash,
 } from 'react-icons/bs';
 import './todoItem.scss';
+
 const ToDoItem = ({ todo }) => {
 	const [hoverCheck, setHoverCheck] = useState(false);
 	const [hoverTasks, setHoverTasks] = useState(false);

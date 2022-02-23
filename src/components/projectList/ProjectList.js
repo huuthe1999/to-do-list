@@ -21,7 +21,28 @@ const projectList = [
 		name: 'relax',
 		size: 10,
 	},
+	{
+		id: 4,
+		name: 'relax personal',
+		size: 10,
+	},
+	{
+		id: 5,
+		name: 'relax play videos',
+		size: 9,
+	},
+	{
+		id: 6,
+		name: 'relax swimming',
+		size: 10,
+	},
+	{
+		id: 7,
+		name: 'relax watching tv',
+		size: 10,
+	},
 ];
+
 const ProjectList = () => {
 	const [showMenu, setShowMenu] = useState(true);
 	const [showEdit, setShowEdit] = useState(false);
@@ -59,8 +80,8 @@ const ProjectList = () => {
 							{projectList.map(({ id, ...rest }) => (
 								<ProjectItem
 									key={id}
-									{...rest}
 									edit={showEdit}
+									{...rest}
 								/>
 							))}
 						</ul>

@@ -5,8 +5,8 @@
 	background-image: url(../../assets/images/bg_main.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
-	overflow: hidden auto;
-	padding: 40px;
+	padding: 30px 40px;
+	overflow: auto;
 }
 
 .editor {
@@ -50,8 +50,8 @@
 	}
 }
 
-.listTodo {
-	width: 100%;
-	height: calc(100% - 160px);
-	background-color: rgb(94, 25, 25);
-}
+// .listTodo {
+// 	width: 100%;
+// 	height: calc(100% - 160px);
+// 	background-color: rgb(94, 25, 25);
+// }

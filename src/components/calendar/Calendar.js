@@ -11,7 +11,7 @@ import CalendarItem from './calendarItem/CalendarItem';
 const calendarList = [
 	{
 		id: 1,
-		name: 'Today dwdwdwdwdw wdwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww wdwdwdwdwddwdwdwd',
+		name: 'Today',
 		icon: <IoCalendarClearOutline size='24px' color='#246fe0' />,
 		size: 0,
 	},

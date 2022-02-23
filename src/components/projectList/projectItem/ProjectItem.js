@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { IoCloseOutline, IoPencilOutline } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { setSelectProject } from '../../../features/project/projectSlice';
 import EditProjectForm from '../../form/projectForm/EditProjectForm';
 import Modal from '../../modal/Modal';
 import './projectItem.scss';
 
 const ProjectItem = ({ name, size, edit }) => {
+	const dispatch = useDispatch();
 	const [showModal, setShowModal] = useState(false);
 	return (
 		<>
 			<li
+				onClick={() => dispatch(setSelectProject(name))}
 				className={`projectList__content--item ${
 					edit ? '' : 'notEdit'
 				}`}>

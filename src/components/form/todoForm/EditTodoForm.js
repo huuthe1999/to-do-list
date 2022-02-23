@@ -1,14 +1,50 @@
 import { useState } from 'react';
 import Modal from '../../modal/Modal';
 import TodoForm from './TodoForm';
-
-const EditTodoForm = ({ project }) => {
+const projectList = [
+	{
+		id: 1,
+		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
+		size: 4,
+	},
+	{
+		id: 2,
+		name: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
+		size: 7,
+	},
+	{
+		id: 3,
+		name: 'relax',
+		size: 10,
+	},
+	{
+		id: 4,
+		name: 'relax personal',
+		size: 10,
+	},
+	{
+		id: 5,
+		name: 'relax play videos',
+		size: 9,
+	},
+	{
+		id: 6,
+		name: 'relax swimming',
+		size: 10,
+	},
+	{
+		id: 7,
+		name: 'relax watching tv',
+		size: 10,
+	},
+];
+const EditTodoForm = ({ todo }) => {
 	const [modal, setShowModal] = useState(false);
-	const [title, setTitle] = useState(project.title);
-	const [description, setDescription] = useState(project.description);
-	const [selectedDate, setSelectedDate] = useState(project.day);
-	const [selectedTime, setSelectedTime] = useState(project.time);
-
+	const [title, setTitle] = useState(todo.title);
+	const [description, setDescription] = useState(todo.description);
+	const [selectedDate, setSelectedDate] = useState(todo.day);
+	const [selectedTime, setSelectedTime] = useState(todo.time);
+	const [todoProject, setTodoProject] = useState(todo.project);
 	const handleShowModal = () => {
 		setShowModal(false);
 	};
@@ -24,6 +60,9 @@ const EditTodoForm = ({ project }) => {
 	const handleChangeDescription = e => {
 		setDescription(e.target.value);
 	};
+	const handleChangeTodoProject = name => {
+		setTodoProject(name);
+	};
 	const handleSubmit = e => {};
 	return (
 		<Modal showModal={modal} setShowModal={handleShowModal}>
@@ -38,7 +77,9 @@ const EditTodoForm = ({ project }) => {
 				handleChangeDay={handleChangeDay}
 				time={selectedTime}
 				handleChangeTime={handleChangeTime}
-				// projectList={projectList}
+				projectList={projectList}
+				todoProject={todoProject}
+				setTodoProject={handleChangeTodoProject}
 				textButton='Change'
 				setShowModal={handleShowModal}
 			/>

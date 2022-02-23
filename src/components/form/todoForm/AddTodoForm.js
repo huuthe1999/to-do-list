@@ -1,83 +1,54 @@
 import { useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
+import { selectProject } from '../../../features/project/projectSlice';
 import Modal from '../../modal/Modal';
 import TodoForm from './TodoForm';
 const projectList = [
 	{
 		id: 1,
-		title: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
-		time: '10:00 AM',
-		date: '06/03/2021',
-		day: '6',
-		checked: false,
-		color: '#00ff00',
 		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
 		size: 4,
 	},
 	{
 		id: 2,
-		title: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
-
-		time: '10:00 AM',
-		date: '06/03/2021',
-		day: '4',
-		checked: false,
-		color: '#00ff00',
-		name: 'perspersonal edfefeef fewfewfefwfewg fewfewfewfew fwfewfeonal',
+		name: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
 		size: 7,
 	},
 	{
 		id: 3,
-		title: 'relax personal',
-		time: '10:00 AM',
-		date: '06/03/2021',
-		day: '2',
-		checked: false,
-		color: '#00ff00',
-		name: 'relax personal',
+		name: 'relax',
 		size: 10,
 	},
 	{
 		id: 4,
-		title: 'relax play videos',
-		time: '10:00 AM',
-		date: '06/03/2021',
-		day: '6',
-		checked: true,
-		color: '#00ff00',
-		name: 'relax play videos',
+		name: 'relax personal',
 		size: 10,
 	},
 	{
 		id: 5,
-		title: 'relax swimming',
-		time: '10:00 AM',
-		date: '06/03/2021',
-		day: '6',
-		checked: false,
-		color: '#00ff00',
+		name: 'relax play videos',
+		size: 9,
+	},
+	{
+		id: 6,
 		name: 'relax swimming',
 		size: 10,
 	},
 	{
-		id: 6,
-		title: 'relax watching tv',
-		time: '10:00 AM',
-		date: '06/03/2021',
-		day: '6',
-		checked: true,
-		color: '#00ff00',
+		id: 7,
 		name: 'relax watching tv',
 		size: 10,
 	},
 ];
 const AddTodoForm = () => {
+	const projectSelected = useSelector(selectProject);
 	const [modal, setShowModal] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [selectedTime, setSelectedTime] = useState(new Date());
-
+	const [todoProject, setTodoProject] = useState(projectSelected);
 	const handleShowModal = () => {
 		setShowModal(false);
 	};
@@ -93,6 +64,11 @@ const AddTodoForm = () => {
 	const handleChangeDescription = e => {
 		setDescription(e.target.value);
 	};
+
+	const handleChangeTodoProject = name => {
+		setTodoProject(name);
+	};
+
 	const handleSubmit = e => {};
 	return (
 		<>
@@ -116,6 +92,8 @@ const AddTodoForm = () => {
 					time={selectedTime}
 					handleChangeTime={handleChangeTime}
 					projectList={projectList}
+					todoProject={todoProject}
+					setTodoProject={handleChangeTodoProject}
 					textButton='Add Task'
 					setShowModal={handleShowModal}
 				/>
