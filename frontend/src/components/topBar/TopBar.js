@@ -34,7 +34,7 @@ const TopBar = () => {
 					</button>
 					<button className='topbar__button info'>
 						<img src={Avatar} alt='avatar' />
-						<p>Jackson Statham</p>
+						<p>Jackson Stalag</p>
 					</button>
 				</div>
 			</div>

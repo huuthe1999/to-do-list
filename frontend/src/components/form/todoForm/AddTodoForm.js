@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 import { selectProject } from '../../../features/project/projectSlice';
 import Modal from '../../modal/Modal';
 import TodoForm from './TodoForm';
+
 const projectList = [
 	{
 		id: 1,
@@ -41,6 +42,7 @@ const projectList = [
 		size: 10,
 	},
 ];
+
 const AddTodoForm = () => {
 	const projectSelected = useSelector(selectProject);
 	const [modal, setShowModal] = useState(false);
@@ -49,6 +51,18 @@ const AddTodoForm = () => {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [selectedTime, setSelectedTime] = useState(new Date());
 	const [todoProject, setTodoProject] = useState(projectSelected);
+	const [allowAddForm, setAllowAddForm] = useState(false);
+
+	useEffect(() => {
+		setTodoProject(projectSelected);
+	}, [projectSelected]);
+
+	useEffect(() => {
+		setAllowAddForm(
+			title && todoProject && projectList.length > 0 ? true : false,
+		);
+	}, [title, todoProject]);
+
 	const handleShowModal = () => {
 		setShowModal(false);
 	};
@@ -69,7 +83,9 @@ const AddTodoForm = () => {
 		setTodoProject(name);
 	};
 
-	const handleSubmit = e => {};
+	const handleSubmit = e => {
+		e.preventDefault();
+	};
 	return (
 		<>
 			<button className='topbar__button rightControl'>
@@ -94,6 +110,7 @@ const AddTodoForm = () => {
 					projectList={projectList}
 					todoProject={todoProject}
 					setTodoProject={handleChangeTodoProject}
+					allowAddForm={allowAddForm}
 					textButton='Add Task'
 					setShowModal={handleShowModal}
 				/>

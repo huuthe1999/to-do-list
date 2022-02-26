@@ -32,6 +32,7 @@ const TodoForm = ({
 	todoProject,
 	setTodoProject,
 	textButton,
+	allowAddForm,
 	setShowModal,
 	handleSubmit,
 }) => {
@@ -100,7 +101,7 @@ const TodoForm = ({
 									<p>Choose a project</p>
 								</div>
 								<div className='todoForm__main--tag-list'>
-									{projectList &&
+									{projectList && projectList.length > 0 ? (
 										projectList.map(project => (
 											<div
 												key={project.id}
@@ -114,12 +115,26 @@ const TodoForm = ({
 												}>
 												{project.name}
 											</div>
-										))}
+										))
+									) : (
+										<div
+											style={{
+												color: 'red',
+												cursor: 'not-allowed',
+											}}>
+											Please add some projects before
+											starting
+										</div>
+									)}
 								</div>
 							</div>
 						</main>
 						<footer className='todoForm__footer'>
-							<button className='todoForm__footer-button'>
+							<button
+								type='submit'
+								className={`todoForm__footer-button ${
+									!allowAddForm ? 'disabled' : ''
+								}`}>
 								{textButton}
 							</button>
 							<button

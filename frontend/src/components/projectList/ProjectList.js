@@ -1,53 +1,58 @@
 import { useState } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
 import { IoColorPaletteOutline, IoPencil } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
+import { projects } from '../../features/project/projectSlice';
 import AddProjectForm from '../form/projectForm/AddProjectForm';
 import ProjectItem from './projectItem/ProjectItem';
 import './projectList.scss';
 
-const projectList = [
-	{
-		id: 1,
-		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
-		size: 4,
-	},
-	{
-		id: 2,
-		name: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
-		size: 7,
-	},
-	{
-		id: 3,
-		name: 'relax',
-		size: 10,
-	},
-	{
-		id: 4,
-		name: 'relax personal',
-		size: 10,
-	},
-	{
-		id: 5,
-		name: 'relax play videos',
-		size: 9,
-	},
-	{
-		id: 6,
-		name: 'relax swimming',
-		size: 10,
-	},
-	{
-		id: 7,
-		name: 'relax watching tv',
-		size: 10,
-	},
-];
+// const projectList = [
+// 	{
+// 		id: 1,
+// 		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
+// 		size: 4,
+// 	},
+// 	{
+// 		id: 2,
+// 		name: 'personal',
+// 		size: 7,
+// 	},
+// 	{
+// 		id: 3,
+// 		name: 'relax',
+// 		size: 10,
+// 	},
+// 	{
+// 		id: 4,
+// 		name: 'relax personal',
+// 		size: 10,
+// 	},
+// 	{
+// 		id: 5,
+// 		name: 'relax play videos',
+// 		size: 9,
+// 	},
+// 	{
+// 		id: 6,
+// 		name: 'relax swimming',
+// 		size: 10,
+// 	},
+// 	{
+// 		id: 7,
+// 		name: 'relax watching tv',
+// 		size: 10,
+// 	},
+// ];
 
 const ProjectList = () => {
+	const projectList = useSelector(projects);
 	const [showMenu, setShowMenu] = useState(true);
 	const [showEdit, setShowEdit] = useState(false);
 
-	// const [edit, setEdit] = useState(true);
+	// useEffect(() => {
+	// 	projects=useProjectList()
+	//  }, []);
 
 	const editActiveStyle = showEdit
 		? { color: '#058527', backgroundColor: '#e0e0e0' }
@@ -77,13 +82,14 @@ const ProjectList = () => {
 				<div className='projectList__content--wrapper'>
 					<div className='projectList__content--wrapper--inner'>
 						<ul className='projectList__content--list'>
-							{projectList.map(({ id, ...rest }) => (
-								<ProjectItem
-									key={id}
-									edit={showEdit}
-									{...rest}
-								/>
-							))}
+							{projectList &&
+								projectList.map(({ id, ...rest }) => (
+									<ProjectItem
+										key={id}
+										edit={showEdit}
+										{...rest}
+									/>
+								))}
 						</ul>
 					</div>
 				</div>

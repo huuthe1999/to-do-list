@@ -76,6 +76,7 @@
 			& > input {
 				font-size: 1rem;
 				font-weight: 500;
+				margin-bottom: 10px;
 			}
 
 			& > textarea {
@@ -177,7 +178,12 @@
 			}
 			&:first-child {
 				background-color: #0091ea;
-				cursor: not-allowed;
+				opacity: 1;
+				filter: none;
+				&.disabled {
+					cursor: not-allowed;
+					opacity: 0.6;
+				}
 			}
 			&:not(:first-child) {
 				background-color: transparent;

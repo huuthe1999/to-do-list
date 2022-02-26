@@ -6,7 +6,8 @@
 	padding: 20px 30px;
 	-webkit-box-shadow: 6px 6px 15px 4px rgba(30, 30, 30, 0.97);
 	box-shadow: 6px 6px 15px 4px rgba(30, 30, 30, 0.97);
-	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 
 	&__title {
 		background-color: aqua;
@@ -49,8 +50,7 @@
 
 	&__container {
 		margin-top: 20px;
-		height: 90%;
-		width: 100%;
+		flex: 1;
 		overflow: hidden auto;
 	}
 }
