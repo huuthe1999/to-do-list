@@ -2,11 +2,19 @@ const asyncHandler = require('express-async-handler');
 const Project = require('../models/project-model');
 const Todo = require('../models/todo-model');
 exports.getTodoList = asyncHandler(async (req, res) => {
+	const { pId } = req.params;
+	if (!pId) {
+		return res.status(400).json({ message: 'Not provide id project' });
+	}
 	try {
-		const resultAction = await Project.find()
-			.sort({ created_at: -1 })
+		const resultAction = await Project.findById(pId)
+			.select('-_id todoListId')
+			.populate({
+				path: 'todoListId',
+				options: { sort: { created_at: -1 } },
+			})
 			.exec();
-		return res.status(200).json(resultAction);
+		return res.status(200).json(resultAction.todoListId);
 	} catch (error) {
 		res.status(400).json(error);
 	}

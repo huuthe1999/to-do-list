@@ -1,12 +1,19 @@
 import { useDispatch } from 'react-redux';
 import { deleteProject } from '../../../features/project/projectSlice';
 import ProjectForm from './ProjectForm';
-const DeleteProjectForm = ({ id, name, isDeleteForm, setShowModal }) => {
+const DeleteProjectForm = ({
+	id,
+	name,
+	isDeleteForm,
+	setShowModal,
+	handleShowEdit,
+}) => {
 	const dispatch = useDispatch();
 	const handleSubmitForm = e => {
 		e.preventDefault();
 		dispatch(deleteProject(id));
 		setShowModal(false);
+		handleShowEdit();
 	};
 
 	return (

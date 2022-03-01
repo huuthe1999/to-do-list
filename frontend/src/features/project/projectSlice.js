@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { setTodoList } from '../todo/todoSlice';
 import projectService from './projectService';
 const initialState = {
 	defaultProject: 'Today',
@@ -23,6 +24,22 @@ export const getProjectList = createAsyncThunk(
 			// 	error.response.data.message) ||
 			// error.message ||
 			// error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+	},
+);
+
+export const getProject = createAsyncThunk(
+	'project/getProject',
+	async (id, thunkAPI) => {
+		try {
+			const res = await projectService.getProject(id);
+			return res;
+		} catch (error) {
+			const message =
+				error.response?.data?.message ||
+				error.message ||
+				error.toString();
 			return thunkAPI.rejectWithValue(message);
 		}
 	},
@@ -65,6 +82,7 @@ export const deleteProject = createAsyncThunk(
 	async (id, thunkAPI) => {
 		try {
 			const res = await projectService.deleteProject(id);
+			thunkAPI.dispatch(setTodoList([]));
 			return res;
 		} catch (error) {
 			const message =
@@ -80,11 +98,24 @@ export const projectSlice = createSlice({
 	name: 'project',
 	initialState,
 	reducers: {
+		setDefaultProject: (state, action) => {
+			state.defaultProject = action.payload;
+		},
 		setSelectProject: (state, action) => {
 			state.selectProject = action.payload;
 		},
 		setProjectList: (state, action) => {
 			state.projectList = action.payload;
+		},
+		addTodoToProjectList: (state, action) => {
+			const { projectId, _id } = action.payload;
+			const projectIndex = state.projectList.findIndex(
+				project => project._id === projectId,
+			);
+
+			if (projectIndex !== -1) {
+				state.projectList[projectIndex].todoListId.push(_id);
+			}
 		},
 	},
 	extraReducers: {
@@ -94,6 +125,20 @@ export const projectSlice = createSlice({
 		[getProjectList.rejected]: (state, action) => {
 			state.error = action.payload;
 		},
+		[getProject.fulfilled]: (state, action) => {
+			const { _id } = action.payload;
+			const indexProject = state.projectList.findIndex(
+				project => project._id === _id,
+			);
+
+			if (indexProject !== -1) {
+				state.projectList[indexProject] = action.payload;
+			}
+		},
+		[getProject.rejected]: (state, action) => {
+			state.error = action.payload;
+		},
+
 		[createProject.fulfilled]: (state, action) => {
 			state.selectProject = action.payload;
 			state.projectList.unshift(action.payload);
@@ -119,7 +164,7 @@ export const projectSlice = createSlice({
 			);
 			if (index !== -1) {
 				state.projectList.splice(index, 1);
-				state.selectProject = state.projectList[0];
+				state.selectProject = 'Today';
 			}
 		},
 		[deleteProject.rejected]: (state, action) => {
@@ -128,9 +173,15 @@ export const projectSlice = createSlice({
 	},
 });
 
-export const { setSelectProject, setProjectList } = projectSlice.actions;
+export const {
+	setDefaultProject,
+	setSelectProject,
+	setProjectList,
+	addTodoToProjectList,
+} = projectSlice.actions;
 
 export const selectProject = state => state.project.selectProject;
+export const selectDefaultProject = state => state.project.defaultProject;
 export const defaultProject = state => state.project.defaultProject;
 export const selectProjectList = state => state.project.projectList;
 

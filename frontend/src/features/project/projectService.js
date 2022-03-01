@@ -6,6 +6,11 @@ const getProjectList = async () => {
 	return res.data;
 };
 
+const getProject = async id => {
+	const res = await AXIOS_INSTANCE.get(`${END_POINT}?id=${id}`);
+	return res.data;
+};
+
 const createProject = async project => {
 	const res = await AXIOS_INSTANCE.post(END_POINT, project);
 	return res.data;
@@ -23,6 +28,7 @@ const deleteProject = async id => {
 
 const projectService = {
 	getProjectList,
+	getProject,
 	createProject,
 	updateProject,
 	deleteProject,

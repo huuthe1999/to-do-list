@@ -10,7 +10,7 @@ import EditProjectForm from '../../form/projectForm/EditProjectForm';
 import Modal from '../../modal/Modal';
 import './projectItem.scss';
 
-const ProjectItem = ({ project, edit }) => {
+const ProjectItem = ({ project, edit, handleShowEdit }) => {
 	const projectSelected = useSelector(selectProject);
 	const dispatch = useDispatch();
 	const [showModal, setShowModal] = useState(false);
@@ -71,6 +71,7 @@ const ProjectItem = ({ project, edit }) => {
 							name={project.name}
 							setShowModal={setShowModal}
 							isDeleteForm={isDeleteForm}
+							handleShowEdit={handleShowEdit}
 						/>
 					)}
 				</Modal>

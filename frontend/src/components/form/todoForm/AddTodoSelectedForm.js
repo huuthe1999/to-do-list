@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { useEffect, useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProject } from '../../../features/project/projectSlice';
+import {
+	addTodoToProjectList,
+	selectProject,
+} from '../../../features/project/projectSlice';
 import { createTodo } from '../../../features/todo/todoSlice';
 import { randomColor } from '../../../helpers/randomColor';
 import Modal from '../../modal/Modal';
@@ -17,6 +21,9 @@ const AddTodoSelectedForm = () => {
 	const [todoProject, setTodoProject] = useState(projectSelected);
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		setTodoProject(projectSelected);
+	}, [dispatch, projectSelected]);
 	const handleShowModal = () => {
 		setShowModal(false);
 	};
@@ -37,7 +44,14 @@ const AddTodoSelectedForm = () => {
 		setTodoProject(project);
 	};
 
-	const handleSubmit = e => {
+	const handleClear = () => {
+		setTitle('');
+		setDescription('');
+		setSelectedDate(new Date());
+		setSelectedTime(new Date());
+		setTodoProject(projectSelected);
+	};
+	const handleSubmit = async e => {
 		e.preventDefault();
 		const newTodo = {
 			name: title,
@@ -48,12 +62,13 @@ const AddTodoSelectedForm = () => {
 			color: randomColor(),
 			projectId: projectSelected._id,
 		};
-		dispatch(createTodo({ id: projectSelected._id, newTodo }));
-		setTitle('');
-		setDescription('');
-		setSelectedDate(new Date());
-		setSelectedTime(new Date());
+		let resultAction = await dispatch(
+			createTodo({ id: projectSelected._id, newTodo }),
+		);
+		resultAction = unwrapResult(resultAction);
+		handleClear();
 		setShowModal(false);
+		dispatch(addTodoToProjectList(resultAction));
 	};
 	return (
 		<>
@@ -79,6 +94,7 @@ const AddTodoSelectedForm = () => {
 					setTodoProject={handleChangeTodoProject}
 					textButton='Add Task'
 					setShowModal={handleShowModal}
+					handleClear={handleClear}
 					allowAddTodoSelectedForm
 				/>
 			</Modal>

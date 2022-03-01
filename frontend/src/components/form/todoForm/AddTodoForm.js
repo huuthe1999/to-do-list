@@ -1,61 +1,28 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-	selectProject,
+	addTodoToProjectList,
+	selectDefaultProject,
 	selectProjectList,
+	setSelectProject,
 } from '../../../features/project/projectSlice';
+import { createTodo } from '../../../features/todo/todoSlice';
+import { randomColor } from '../../../helpers/randomColor';
 import Modal from '../../modal/Modal';
 import TodoForm from './TodoForm';
 
-// const projectList = [
-// 	{
-// 		id: 1,
-// 		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
-// 		size: 4,
-// 	},
-// 	{
-// 		id: 2,
-// 		name: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
-// 		size: 7,
-// 	},
-// 	{
-// 		id: 3,
-// 		name: 'relax',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 4,
-// 		name: 'relax personal',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 5,
-// 		name: 'relax play videos',
-// 		size: 9,
-// 	},
-// 	{
-// 		id: 6,
-// 		name: 'relax swimming',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 7,
-// 		name: 'relax watching tv',
-// 		size: 10,
-// 	},
-// ];
-
 const AddTodoForm = () => {
 	const projectList = useSelector(selectProjectList);
-	const projectSelected = useSelector(selectProject);
+	const projectDefault = useSelector(selectDefaultProject);
 	const [modal, setShowModal] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [selectedTime, setSelectedTime] = useState(new Date());
-	const [todoProject, setTodoProject] = useState('');
-
+	const [todoProject, setTodoProject] = useState(projectDefault);
+	const dispatch = useDispatch();
 	// useEffect(() => {
 	// 	setTodoProject(projectSelected);
 	// }, [projectSelected]);
@@ -76,21 +43,37 @@ const AddTodoForm = () => {
 		setDescription(e.target.value);
 	};
 
-	const handleChangeTodoProject = name => {
-		setTodoProject(name);
+	const handleChangeTodoProject = project => {
+		setTodoProject(project);
 	};
 
-	const handleSubmit = e => {
+	const handleClear = () => {
+		setTitle('');
+		setDescription('');
+		setSelectedDate(new Date());
+		setSelectedTime(new Date());
+		setTodoProject(projectDefault);
+	};
+
+	const handleSubmit = async e => {
 		e.preventDefault();
-		alert(
-			JSON.stringify({
-				title,
-				description,
-				selectedDate,
-				selectedTime,
-				todoProject,
-			}),
+		const newTodo = {
+			name: title,
+			description,
+			date: selectedDate,
+			time: selectedTime,
+			day: selectedDate.getDay(),
+			color: randomColor(),
+			projectId: todoProject._id,
+		};
+		let resultAction = await dispatch(
+			createTodo({ id: todoProject._id, newTodo }),
 		);
+		resultAction = unwrapResult(resultAction);
+		handleClear();
+		setShowModal(false);
+		dispatch(addTodoToProjectList(resultAction));
+		dispatch(setSelectProject(todoProject));
 	};
 	return (
 		<>
@@ -118,6 +101,7 @@ const AddTodoForm = () => {
 					setTodoProject={handleChangeTodoProject}
 					textButton='Add Task'
 					setShowModal={handleShowModal}
+					handleClear={handleClear}
 				/>
 			</Modal>
 		</>

@@ -1,11 +1,24 @@
 const asyncHandler = require('express-async-handler');
 const Project = require('../models/project-model');
-exports.getProjectList = asyncHandler(async (req, res) => {
+const Todo = require('../models/todo-model');
+exports.getProject = asyncHandler(async (req, res) => {
+	const { id } = req.query;
+	if (id) {
+		try {
+			const project = await Project.findById(id);
+			if (!project) {
+				return res.status(404).json({ message: 'Project not found' });
+			}
+			return res.status(200).json(project);
+		} catch (error) {
+			return res.status(400).json(error);
+		}
+	}
 	try {
 		const resultAction = await Project.find()
 			.sort({ created_at: -1 })
 			.exec();
-		return res.status(200).json(resultAction);
+		res.status(200).json(resultAction);
 	} catch (error) {
 		res.status(400).json(error);
 	}
@@ -52,7 +65,13 @@ exports.deleteProject = asyncHandler(async (req, res) => {
 	}
 
 	if (!project) {
-		res.status(402).json({ message: 'Project not found' });
+		return res.status(402).json({ message: 'Project not found' });
+	}
+
+	try {
+		await Todo.deleteMany({ projectId: pId });
+	} catch (err) {
+		return res.status(400).json({ message: 'Delete todo list failed' });
 	}
 
 	res.status(200).json({ id: project._id, message: 'Project deleted' });

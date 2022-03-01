@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import React, { useState } from 'react';
 import {
 	BsArrowCounterclockwise,
@@ -6,10 +7,12 @@ import {
 	BsTrash,
 } from 'react-icons/bs';
 import './todoItem.scss';
-
-const ToDoItem = ({ todo }) => {
+const ToDoItem = ({ todo, nameProject }) => {
 	const [hoverCheck, setHoverCheck] = useState(false);
 	const [hoverTasks, setHoverTasks] = useState(false);
+
+	const dateFormat = format(new Date(todo.date), 'dd/MM/yyyy');
+	const timeFormat = format(new Date(todo.time), 'HH:mm a ');
 	return (
 		<div className='todoItem'>
 			<div className='todoItem__container'>
@@ -38,7 +41,7 @@ const ToDoItem = ({ todo }) => {
 					<div className='todoItem__container--content'>
 						<p>{todo.name}</p>
 						<span>
-							{todo.time} - {todo.project}
+							{dateFormat} - {timeFormat}- {nameProject}
 						</span>
 						<div
 							className={`todoItem__container--content-line ${

@@ -12,53 +12,21 @@ import AddProjectForm from '../form/projectForm/AddProjectForm';
 import ProjectItem from './projectItem/ProjectItem';
 import './projectList.scss';
 
-// const projectList = [
-// 	{
-// 		id: 1,
-// 		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
-// 		size: 4,
-// 	},
-// 	{
-// 		id: 2,
-// 		name: 'personal',
-// 		size: 7,
-// 	},
-// 	{
-// 		id: 3,
-// 		name: 'relax',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 4,
-// 		name: 'relax personal',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 5,
-// 		name: 'relax play videos',
-// 		size: 9,
-// 	},
-// 	{
-// 		id: 6,
-// 		name: 'relax swimming',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 7,
-// 		name: 'relax watching tv',
-// 		size: 10,
-// 	},
-// ];
-
 const ProjectList = () => {
 	const projectList = useSelector(selectProjectList);
 	const [showMenu, setShowMenu] = useState(true);
 	const [showEdit, setShowEdit] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getProjectList());
+		const response = async () => {
+			await dispatch(getProjectList());
+		};
+		response();
 	}, [dispatch]);
 
+	const handleShowEdit = () => {
+		setShowEdit(!showEdit);
+	};
 	const editActiveStyle = showEdit
 		? { color: '#058527', backgroundColor: '#e0e0e0' }
 		: undefined;
@@ -93,6 +61,7 @@ const ProjectList = () => {
 										key={project._id}
 										project={project}
 										edit={showEdit}
+										handleShowEdit={handleShowEdit}
 									/>
 								))}
 						</ul>

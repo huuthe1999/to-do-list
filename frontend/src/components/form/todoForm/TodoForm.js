@@ -9,6 +9,7 @@ import {
 import { ThemeProvider } from '@material-ui/styles';
 import { useEffect, useState } from 'react';
 import { BsAlarm, BsCalendarDay, BsClock, BsTag, BsXLg } from 'react-icons/bs';
+import { checkCalenderItem } from '../../../helpers/checkCalenderItem';
 import './todoForm.scss';
 
 const materialTheme = createTheme({
@@ -35,18 +36,25 @@ const TodoForm = ({
 	setTodoProject,
 	textButton,
 	setShowModal,
+	handleClear,
 	allowAddTodoSelectedForm,
 }) => {
 	const [allowAddForm, setAllowAddForm] = useState(false);
+	const checkItemCalender = checkCalenderItem(todoProject);
 	useEffect(() => {
 		if (projectList) {
 			setAllowAddForm(
-				title && todoProject && projectList.length > 0 ? true : false,
+				!checkItemCalender &&
+					title &&
+					todoProject &&
+					projectList.length > 0
+					? true
+					: false,
 			);
 			return;
 		}
 		setAllowAddForm(title ? true : false);
-	}, [title, todoProject, projectList]);
+	}, [title, todoProject, projectList, checkItemCalender]);
 	return (
 		<MuiPickersUtilsProvider utils={DateFnsUtils}>
 			<ThemeProvider theme={materialTheme}>
@@ -122,14 +130,15 @@ const TodoForm = ({
 												key={project._id}
 												className={`${
 													todoProject.name ===
-													project.name
+														project.name &&
+													!checkItemCalender
 														? 'active'
 														: ''
 												}`}
 												onClick={() =>
 													setTodoProject(project)
 												}>
-												{todoProject.name}
+												{project.name}
 											</div>
 										))
 									) : allowAddTodoSelectedForm ? (
@@ -162,7 +171,10 @@ const TodoForm = ({
 							</button>
 							<button
 								className='todoForm__footer-button'
-								onClick={setShowModal}>
+								onClick={() => {
+									setShowModal();
+									handleClear();
+								}}>
 								Cancel
 							</button>
 						</footer>
