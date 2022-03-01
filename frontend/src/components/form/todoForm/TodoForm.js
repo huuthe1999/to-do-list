@@ -7,6 +7,7 @@ import {
 	TimePicker,
 } from '@material-ui/pickers';
 import { ThemeProvider } from '@material-ui/styles';
+import { useEffect, useState } from 'react';
 import { BsAlarm, BsCalendarDay, BsClock, BsTag, BsXLg } from 'react-icons/bs';
 import './todoForm.scss';
 
@@ -19,6 +20,7 @@ const materialTheme = createTheme({
 });
 
 const TodoForm = ({
+	handleSubmit,
 	titleForm,
 	title,
 	handleChangeTitle,
@@ -32,10 +34,19 @@ const TodoForm = ({
 	todoProject,
 	setTodoProject,
 	textButton,
-	allowAddForm,
 	setShowModal,
-	handleSubmit,
+	allowAddTodoSelectedForm,
 }) => {
+	const [allowAddForm, setAllowAddForm] = useState(false);
+	useEffect(() => {
+		if (projectList) {
+			setAllowAddForm(
+				title && todoProject && projectList.length > 0 ? true : false,
+			);
+			return;
+		}
+		setAllowAddForm(title ? true : false);
+	}, [title, todoProject, projectList]);
 	return (
 		<MuiPickersUtilsProvider utils={DateFnsUtils}>
 			<ThemeProvider theme={materialTheme}>
@@ -68,7 +79,7 @@ const TodoForm = ({
 							</div>
 							<div className='todoForm__main--remind'>
 								<BsAlarm />
-								<p>remind me</p>
+								<p>Remind Me</p>
 							</div>
 							<div className='todoForm__main--pickDay'>
 								<div className='todoForm__main--pickDay-title'>
@@ -98,24 +109,35 @@ const TodoForm = ({
 							<div className='todoForm__main--tag'>
 								<div className='todoForm__main--tag-title'>
 									<BsTag />
-									<p>Choose a project</p>
+									{allowAddTodoSelectedForm ? (
+										<p>Default project</p>
+									) : (
+										<p>Choose a project</p>
+									)}
 								</div>
 								<div className='todoForm__main--tag-list'>
 									{projectList && projectList.length > 0 ? (
 										projectList.map(project => (
 											<div
-												key={project.id}
+												key={project._id}
 												className={`${
-													todoProject === project.name
+													todoProject.name ===
+													project.name
 														? 'active'
 														: ''
 												}`}
 												onClick={() =>
-													setTodoProject(project.name)
+													setTodoProject(project)
 												}>
-												{project.name}
+												{todoProject.name}
 											</div>
 										))
+									) : allowAddTodoSelectedForm ? (
+										<div
+											className='active'
+											style={{ cursor: 'not-allowed' }}>
+											{todoProject.name}
+										</div>
 									) : (
 										<div
 											style={{
@@ -132,6 +154,7 @@ const TodoForm = ({
 						<footer className='todoForm__footer'>
 							<button
 								type='submit'
+								disabled={allowAddForm ? false : true}
 								className={`todoForm__footer-button ${
 									!allowAddForm ? 'disabled' : ''
 								}`}>

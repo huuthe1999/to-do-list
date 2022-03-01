@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
 import { IoColorPaletteOutline, IoPencil } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
-import { projects } from '../../features/project/projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getProjectList,
+	isUpdateProjectList,
+	selectProjectList,
+	setIsUpdateProjectList,
+} from '../../features/project/projectSlice';
 import AddProjectForm from '../form/projectForm/AddProjectForm';
 import ProjectItem from './projectItem/ProjectItem';
 import './projectList.scss';
@@ -46,13 +51,13 @@ import './projectList.scss';
 // ];
 
 const ProjectList = () => {
-	const projectList = useSelector(projects);
+	const projectList = useSelector(selectProjectList);
 	const [showMenu, setShowMenu] = useState(true);
 	const [showEdit, setShowEdit] = useState(false);
-
-	// useEffect(() => {
-	// 	projects=useProjectList()
-	//  }, []);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getProjectList());
+	}, [dispatch]);
 
 	const editActiveStyle = showEdit
 		? { color: '#058527', backgroundColor: '#e0e0e0' }
@@ -83,11 +88,11 @@ const ProjectList = () => {
 					<div className='projectList__content--wrapper--inner'>
 						<ul className='projectList__content--list'>
 							{projectList &&
-								projectList.map(({ id, ...rest }) => (
+								projectList.map(project => (
 									<ProjectItem
-										key={id}
+										key={project._id}
+										project={project}
 										edit={showEdit}
-										{...rest}
 									/>
 								))}
 						</ul>

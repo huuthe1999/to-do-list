@@ -1,64 +1,21 @@
 import { useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
-import { useSelector } from 'react-redux';
-import {
-	selectProject,
-	selectProjectList,
-} from '../../../features/project/projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectProject } from '../../../features/project/projectSlice';
+import { createTodo } from '../../../features/todo/todoSlice';
+import { randomColor } from '../../../helpers/randomColor';
 import Modal from '../../modal/Modal';
 import TodoForm from './TodoForm';
 
-// const projectList = [
-// 	{
-// 		id: 1,
-// 		name: 'workkkvvv  kkkkkkkkkkkkkkkkkkkk  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',
-// 		size: 4,
-// 	},
-// 	{
-// 		id: 2,
-// 		name: 'personal edfefeef fewfewfefwfewg fewfewfewfew fwfewfe',
-// 		size: 7,
-// 	},
-// 	{
-// 		id: 3,
-// 		name: 'relax',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 4,
-// 		name: 'relax personal',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 5,
-// 		name: 'relax play videos',
-// 		size: 9,
-// 	},
-// 	{
-// 		id: 6,
-// 		name: 'relax swimming',
-// 		size: 10,
-// 	},
-// 	{
-// 		id: 7,
-// 		name: 'relax watching tv',
-// 		size: 10,
-// 	},
-// ];
-
-const AddTodoForm = () => {
-	const projectList = useSelector(selectProjectList);
+const AddTodoSelectedForm = () => {
 	const projectSelected = useSelector(selectProject);
 	const [modal, setShowModal] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [selectedTime, setSelectedTime] = useState(new Date());
-	const [todoProject, setTodoProject] = useState('');
-
-	// useEffect(() => {
-	// 	setTodoProject(projectSelected);
-	// }, [projectSelected]);
+	const [todoProject, setTodoProject] = useState(projectSelected);
+	const dispatch = useDispatch();
 
 	const handleShowModal = () => {
 		setShowModal(false);
@@ -76,31 +33,36 @@ const AddTodoForm = () => {
 		setDescription(e.target.value);
 	};
 
-	const handleChangeTodoProject = name => {
-		setTodoProject(name);
+	const handleChangeTodoProject = project => {
+		setTodoProject(project);
 	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		alert(
-			JSON.stringify({
-				title,
-				description,
-				selectedDate,
-				selectedTime,
-				todoProject,
-			}),
-		);
+		const newTodo = {
+			name: title,
+			description,
+			date: selectedDate,
+			time: selectedTime,
+			day: selectedDate.getDay(),
+			color: randomColor(),
+			projectId: projectSelected._id,
+		};
+		dispatch(createTodo({ id: projectSelected._id, newTodo }));
+		setTitle('');
+		setDescription('');
+		setSelectedDate(new Date());
+		setSelectedTime(new Date());
+		setShowModal(false);
 	};
 	return (
 		<>
-			<button className='topbar__button rightControl'>
-				<RiAddLine
-					className='topbar__button-icon'
-					onClick={() => setShowModal(true)}
-				/>
+			<button
+				className='todoList__title--button'
+				onClick={() => setShowModal(true)}>
+				<RiAddLine />
+				<p>Add task</p>
 			</button>
-
 			<Modal showModal={modal} setShowModal={handleShowModal}>
 				<TodoForm
 					handleSubmit={handleSubmit}
@@ -113,15 +75,15 @@ const AddTodoForm = () => {
 					handleChangeDay={handleChangeDay}
 					time={selectedTime}
 					handleChangeTime={handleChangeTime}
-					projectList={projectList}
 					todoProject={todoProject}
 					setTodoProject={handleChangeTodoProject}
 					textButton='Add Task'
 					setShowModal={handleShowModal}
+					allowAddTodoSelectedForm
 				/>
 			</Modal>
 		</>
 	);
 };
 
-export default AddTodoForm;
+export default AddTodoSelectedForm;

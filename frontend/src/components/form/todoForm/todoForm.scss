@@ -2,9 +2,9 @@
 	--font-size-label: 20px;
 	background-color: transparent;
 	position: relative;
-	// text-transform: capitalize;
+	font-weight: initial;
 	padding: 16px;
-	max-width: 450px;
+
 	// &__close {
 	// 	position: absolute;
 	// 	right: 16px;
@@ -69,7 +69,7 @@
 				height: 50px;
 
 				&:focus {
-					border-bottom: 1px solid black;
+					border-bottom: 1px solid #0080ff;
 				}
 			}
 
@@ -112,7 +112,6 @@
 		&--tag {
 			display: flex;
 			flex-direction: column;
-			padding: 12px 0px;
 
 			&-title {
 				display: flex;
@@ -126,20 +125,21 @@
 			}
 
 			&-list {
+				flex: 1;
 				display: flex;
 				align-items: center;
 				flex-wrap: wrap;
-				padding: 12px 32px 0px;
+				padding: 12px 32px;
 				font-size: 16px;
-				max-height: 120px;
-				overflow: hidden auto;
+				max-height: 150px;
+				max-width: 350px;
+				overflow: auto;
 				& div {
 					border: 1px solid #0080ff;
 					border-radius: 5px;
 					padding: 5px;
 					margin: 5px;
 					cursor: pointer;
-
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					overflow: hidden;

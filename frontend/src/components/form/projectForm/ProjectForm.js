@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { BsPalette, BsTag, BsXLg } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
+import { BsInfoCircle, BsPalette, BsTag, BsXLg } from 'react-icons/bs';
 import Select from 'react-select';
-import { colourOptions } from '../../../assets/colorData';
+import { colourOptions } from '../../../assets/data';
 import './projectForm.scss';
 
 const dot = (color = 'transparent') => ({
@@ -95,16 +95,23 @@ const ProjectForm = ({
 	headingTitle,
 	name,
 	handleSetName,
+	colorProject,
+	handleSetColorProject,
 	setShowModal,
 	confirmButtonText,
+	isDeleteForm,
 }) => {
 	const [activeColor, setActiveColor] = useState(false);
+	const [allowAddForm, setAllowAddForm] = useState(false);
 
+	useEffect(() => {
+		setAllowAddForm(name ? true : false);
+	}, [name]);
 	return (
 		<section className='projectForm'>
 			<form onSubmit={handleSubmit}>
 				<header className='projectForm__header'>
-					<h3>{headingTitle}</h3>
+					{isDeleteForm ? <BsInfoCircle /> : <h3>{headingTitle}</h3>}
 					<span
 						className='projectForm__close'
 						onClick={() => setShowModal(false)}>
@@ -118,38 +125,59 @@ const ProjectForm = ({
 					</div>
 					<div className='projectForm__main--text'>
 						<input
+							disabled={isDeleteForm ? true : false}
 							type='text'
 							value={name}
 							onChange={handleSetName}
 							placeholder='Name project'
-							autoFocus
+							autoFocus={!isDeleteForm ? true : false}
 						/>
 					</div>
-					<div className='projectForm__main--title'>
-						<BsPalette />
-						<p>pick color</p>
-					</div>
-					<div className='projectForm__main--pickColorWrapper'>
-						<div
-							onClick={() => setActiveColor(!activeColor)}
-							className={`projectForm__main--pickColor ${
-								activeColor ? 'active' : ''
-							}`}>
-							<Select
-								onBlur={() => setActiveColor(false)}
-								menuIsOpen
-								isSearchable={false}
-								defaultValue={colourOptions[6]}
-								options={colourOptions}
-								styles={colourStyles(activeColor)}
-							/>
-						</div>
-					</div>
+					{!isDeleteForm && (
+						<>
+							<div className='projectForm__main--title'>
+								<BsPalette />
+								<p>pick color</p>
+							</div>
+							<div className='projectForm__main--pickColorWrapper'>
+								<div
+									onClick={() => setActiveColor(!activeColor)}
+									className={`projectForm__main--pickColor ${
+										activeColor ? 'active' : ''
+									}`}>
+									<Select
+										onBlur={() => setActiveColor(false)}
+										onChange={handleSetColorProject}
+										menuIsOpen
+										isSearchable={false}
+										defaultValue={colorProject}
+										options={colourOptions}
+										styles={colourStyles(activeColor)}
+									/>
+								</div>
+							</div>
+						</>
+					)}
 				</main>
+
 				<footer className='projectForm__footer'>
-					<button className='projectForm__footer-button'>
-						{confirmButtonText}
-					</button>
+					{!isDeleteForm ? (
+						<button
+							type='submit'
+							disabled={allowAddForm ? false : true}
+							className={`projectForm__footer-button ${
+								!allowAddForm ? 'disabled' : ''
+							}`}>
+							{confirmButtonText}
+						</button>
+					) : (
+						<button
+							type='submit'
+							style={{ backgroundColor: '#ff5252' }}
+							className='projectForm__footer-button'>
+							{confirmButtonText}
+						</button>
+					)}
 					<button
 						className='projectForm__footer-button'
 						onClick={() => setShowModal(false)}>

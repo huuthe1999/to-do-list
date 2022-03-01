@@ -6,9 +6,13 @@ import {
 import './calendarItem.scss';
 const CalendarItem = ({ name, icon, size }) => {
 	const dispatch = useDispatch();
-	const project = useSelector(selectProject);
+	const projectSelected = useSelector(selectProject);
 	return (
 		<li
+			style={{
+				backgroundColor:
+					projectSelected === name ? '#b3b3b3' : undefined,
+			}}
 			onClick={() => dispatch(setSelectProject(name))}
 			className='calendar__content--item'>
 			<span className='calendar__content--item-icon'>{icon}</span>

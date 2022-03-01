@@ -36,6 +36,8 @@
 		justify-content: center;
 		align-items: flex-start;
 		flex-direction: column;
+		margin-bottom: 15px;
+		height: 100%;
 
 		& > div {
 			width: 100%;
@@ -103,11 +105,29 @@
 		&-button {
 			margin: 0px 12px;
 			border-radius: 5px;
-			border: 1px solid black;
+			border: 1px solid transparent;
 			padding: 5px;
+			color: #fff;
 			&:first-child {
-				background-color: rgb(150, 36, 36);
-				cursor: not-allowed;
+				background-color: #0091ea;
+				opacity: 1;
+
+				&:hover {
+					filter: brightness(120%);
+				}
+				&.disabled {
+					filter: none;
+					cursor: not-allowed;
+					opacity: 0.6;
+				}
+			}
+			&:last-child {
+				background-color: transparent;
+				color: rgb(0, 0, 0);
+				border: 1px solid rgb(37, 37, 37);
+				&:hover {
+					background-color: #bebebe;
+				}
 			}
 		}
 	}

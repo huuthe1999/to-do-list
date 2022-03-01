@@ -20,3 +20,5 @@ export const colourOptions = [
 	{ value: 'grey', label: 'Grey', color: '#b8b8b8' },
 	{ value: 'lavender', label: 'Lavender', color: '#ccac93' },
 ];
+
+export const defaultTodoList = ['Today', 'Tomorrow', 'Next Week'];
