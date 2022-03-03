@@ -4,17 +4,23 @@ import {
 	selectProject,
 	setSelectProject,
 } from '../../../features/project/projectSlice';
-import { selectTodoListByDay } from '../../../features/todo/todoSlice';
+import {
+	selectTodoListByDay,
+	selectTodoListByToday,
+	selectTodoListByTomorrow,
+} from '../../../features/todo/todoSlice';
 import './calendarItem.scss';
 const CalendarItem = ({ name, icon }) => {
 	const dispatch = useDispatch();
+	const todoListByToday = useSelector(selectTodoListByToday);
+	const todoListByTomorrow = useSelector(selectTodoListByTomorrow);
 	const project = useSelector(selectProject);
 	const todoListByDay = useSelector(selectTodoListByDay);
 	const sizeProject =
 		name === defaultTodoList[0]
-			? 9
+			? todoListByToday.length
 			: name === defaultTodoList[1]
-			? 8
+			? todoListByTomorrow.length
 			: todoListByDay.length;
 	return (
 		<li

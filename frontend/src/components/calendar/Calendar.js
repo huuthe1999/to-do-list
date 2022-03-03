@@ -8,8 +8,13 @@ import {
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+	filterTodoListByToday,
+	filterTodoListByTomorrow,
 	filterTodoListByWeek,
+	selectTodo,
 	selectTodoList,
+	selectTodoListByToday,
+	selectTodoListByTomorrow,
 } from '../../features/todo/todoSlice';
 import './calendar.scss';
 import CalendarItem from './calendarItem/CalendarItem';
@@ -33,8 +38,20 @@ const calendarList = [
 const Calendar = () => {
 	const dispatch = useDispatch();
 	const todoList = useSelector(selectTodoList);
+	const todoListByToday = useSelector(selectTodoListByToday);
+	const todoListByTomorrow = useSelector(selectTodoListByTomorrow);
+	const todo = useSelector(selectTodo);
 	useEffect(() => {
-		console.log('1');
+		console.log('todoToday', todo);
+		dispatch(filterTodoListByToday());
+	}, [dispatch, todo]);
+
+	useEffect(() => {
+		console.log('todoTomorrow', todo);
+		dispatch(filterTodoListByTomorrow());
+	}, [dispatch, todo]);
+
+	useEffect(() => {
 		dispatch(filterTodoListByWeek());
 	}, [dispatch, todoList]);
 	return (

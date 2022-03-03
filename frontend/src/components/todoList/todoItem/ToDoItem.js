@@ -41,7 +41,8 @@ const ToDoItem = ({ todo, nameProject }) => {
 					<div className='todoItem__container--content'>
 						<p>{todo.name}</p>
 						<span>
-							{dateFormat} - {timeFormat}- {nameProject}
+							{dateFormat} - {timeFormat} -{' '}
+							{todo.nameProject ? todo.nameProject : nameProject}
 						</span>
 						<div
 							className={`todoItem__container--content-line ${
