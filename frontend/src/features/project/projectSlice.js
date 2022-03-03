@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { setTodoList } from '../todo/todoSlice';
+import { defaultTodoList } from '../../assets/data';
 import projectService from './projectService';
 const initialState = {
 	defaultProject: 'Today',
@@ -82,7 +82,7 @@ export const deleteProject = createAsyncThunk(
 	async (id, thunkAPI) => {
 		try {
 			const res = await projectService.deleteProject(id);
-			thunkAPI.dispatch(setTodoList([]));
+			// thunkAPI.dispatch(setTodoList([]));
 			return res;
 		} catch (error) {
 			const message =
@@ -164,6 +164,9 @@ export const projectSlice = createSlice({
 			);
 			if (index !== -1) {
 				state.projectList.splice(index, 1);
+				if (defaultTodoList.includes(state.selectProject)) {
+					return;
+				}
 				state.selectProject = 'Today';
 			}
 		},

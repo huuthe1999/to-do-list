@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { deleteProject } from '../../../features/project/projectSlice';
+import { filterTodoList, setTodoList } from '../../../features/todo/todoSlice';
 import ProjectForm from './ProjectForm';
 const DeleteProjectForm = ({
 	id,
@@ -9,9 +10,11 @@ const DeleteProjectForm = ({
 	handleShowEdit,
 }) => {
 	const dispatch = useDispatch();
-	const handleSubmitForm = e => {
+	const handleSubmitForm = async e => {
 		e.preventDefault();
-		dispatch(deleteProject(id));
+		await dispatch(deleteProject(id));
+		await dispatch(setTodoList([]));
+		await dispatch(filterTodoList(id));
 		setShowModal(false);
 		handleShowEdit();
 	};

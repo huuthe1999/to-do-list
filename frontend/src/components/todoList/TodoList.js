@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { defaultTodoList } from '../../assets/data';
-import emptyData from '../../assets/images/empty.png';
 import { selectProject } from '../../features/project/projectSlice';
 import { getTodoList, selectTodoList } from '../../features/todo/todoSlice';
 import { checkCalenderItem } from '../../helpers/checkCalenderItem';
+import EmptyData from '../common/emptyData/EmptyData';
 import AddTodoSelectedForm from '../form/todoForm/AddTodoSelectedForm';
-import Next7Day from '../next7Day/Next7Day';
+import NextWeek from '../nextWeek/NextWeek';
 import ToDoItem from './todoItem/ToDoItem';
 import './todoList.scss';
 
@@ -38,8 +38,8 @@ const TodoList = () => {
 					overflowY:
 						todoList && todoList.length > 0 ? undefined : 'hidden',
 				}}>
-				{project === 'Next Week' ? (
-					<Next7Day todoList={todoList} />
+				{project === defaultTodoList[2] ? (
+					<NextWeek />
 				) : todoList && todoList.length > 0 ? (
 					todoList.map(todo => (
 						<ToDoItem
@@ -49,32 +49,7 @@ const TodoList = () => {
 						/>
 					))
 				) : (
-					<div
-						style={{
-							width: '100%',
-							height: '100%',
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}>
-						<img
-							style={{
-								display: 'block',
-								width: '60%',
-								height: '80%',
-								margin: 'auto',
-							}}
-							src={emptyData}
-							alt='No data'
-						/>
-						<h2
-							style={{
-								flex: 1,
-							}}>
-							No data
-						</h2>
-					</div>
+					<EmptyData />
 				)}
 			</div>
 		</div>

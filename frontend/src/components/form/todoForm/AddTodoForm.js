@@ -2,9 +2,11 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
+import { defaultTodoList } from '../../../assets/data';
 import {
 	addTodoToProjectList,
 	selectDefaultProject,
+	selectProject,
 	selectProjectList,
 	setSelectProject,
 } from '../../../features/project/projectSlice';
@@ -16,6 +18,7 @@ import TodoForm from './TodoForm';
 const AddTodoForm = () => {
 	const projectList = useSelector(selectProjectList);
 	const projectDefault = useSelector(selectDefaultProject);
+	const project = useSelector(selectProject);
 	const [modal, setShowModal] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -62,7 +65,7 @@ const AddTodoForm = () => {
 			description,
 			date: selectedDate,
 			time: selectedTime,
-			day: selectedDate.getDay(),
+			day: new Date(selectedDate).getDay(),
 			color: randomColor(),
 			projectId: todoProject._id,
 		};
@@ -73,7 +76,9 @@ const AddTodoForm = () => {
 		handleClear();
 		setShowModal(false);
 		dispatch(addTodoToProjectList(resultAction));
-		dispatch(setSelectProject(todoProject));
+		if (!defaultTodoList.includes(project)) {
+			dispatch(setSelectProject(todoProject));
+		}
 	};
 	return (
 		<>

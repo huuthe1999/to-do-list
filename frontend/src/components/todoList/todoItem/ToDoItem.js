@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import moment from 'moment';
 import React, { useState } from 'react';
 import {
 	BsArrowCounterclockwise,
@@ -11,8 +11,8 @@ const ToDoItem = ({ todo, nameProject }) => {
 	const [hoverCheck, setHoverCheck] = useState(false);
 	const [hoverTasks, setHoverTasks] = useState(false);
 
-	const dateFormat = format(new Date(todo.date), 'dd/MM/yyyy');
-	const timeFormat = format(new Date(todo.time), 'HH:mm a ');
+	const dateFormat = moment(todo.date).format('dddd, DD/MM/YYYY');
+	const timeFormat = moment(todo.date).format('HH:mm A ');
 	return (
 		<div className='todoItem'>
 			<div className='todoItem__container'>

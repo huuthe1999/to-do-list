@@ -4,9 +4,7 @@ import { IoColorPaletteOutline, IoPencil } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getProjectList,
-	isUpdateProjectList,
 	selectProjectList,
-	setIsUpdateProjectList,
 } from '../../features/project/projectSlice';
 import AddProjectForm from '../form/projectForm/AddProjectForm';
 import ProjectItem from './projectItem/ProjectItem';
@@ -18,10 +16,11 @@ const ProjectList = () => {
 	const [showEdit, setShowEdit] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		const response = async () => {
-			await dispatch(getProjectList());
-		};
-		response();
+		// const response = async () => {
+		// 	await dispatch(getProjectList());
+		// };
+		// response();
+		dispatch(getProjectList());
 	}, [dispatch]);
 
 	const handleShowEdit = () => {
@@ -55,7 +54,7 @@ const ProjectList = () => {
 				<div className='projectList__content--wrapper'>
 					<div className='projectList__content--wrapper--inner'>
 						<ul className='projectList__content--list'>
-							{projectList &&
+							{projectList.length > 0 &&
 								projectList.map(project => (
 									<ProjectItem
 										key={project._id}

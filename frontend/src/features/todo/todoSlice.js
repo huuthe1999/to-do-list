@@ -1,11 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import todoService from './todoService';
 const initialState = {
+	todoListByDay: [],
 	todoList: [],
 	todo: null,
 	error: null,
 };
 
+export const filterTodoListByWeek = createAsyncThunk(
+	'todo/filterTodoListByWeek',
+	async (_, thunkAPI) => {
+		try {
+			const res = await todoService.filterTodoListByWeek();
+			return res;
+		} catch (error) {
+			const message =
+				error?.response?.data?.message ||
+				error.message ||
+				error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+	},
+);
 export const getTodoList = createAsyncThunk(
 	'todo/getTodoList',
 	async (id, thunkAPI) => {
@@ -46,8 +62,20 @@ export const todoSlice = createSlice({
 		setTodoList: (state, action) => {
 			state.todoList = action.payload;
 		},
+		filterTodoList: (state, action) => {
+			const id = action.payload;
+			state.todoListByDay = state.todoListByDay.filter(
+				todo => todo._id !== id,
+			);
+		},
 	},
 	extraReducers: {
+		[filterTodoListByWeek.fulfilled]: (state, action) => {
+			state.todoListByDay = action.payload;
+		},
+		[filterTodoListByWeek.rejected]: (state, action) => {
+			state.error = action.payload;
+		},
 		[getTodoList.fulfilled]: (state, action) => {
 			state.todoList = action.payload;
 		},
@@ -65,9 +93,10 @@ export const todoSlice = createSlice({
 	},
 });
 
-export const { setSelectTodo, setTodoList } = todoSlice.actions;
+export const { setSelectTodo, setTodoList, filterTodoList } = todoSlice.actions;
 
 export const selectTodo = state => state.todo.selected;
 export const selectTodoList = state => state.todo.todoList;
+export const selectTodoListByDay = state => state.todo.todoListByDay;
 
 export default todoSlice.reducer;

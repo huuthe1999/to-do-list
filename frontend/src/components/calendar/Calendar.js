@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
 import {
 	IoCalendarClearOutline,
@@ -6,6 +6,11 @@ import {
 	IoCalendarOutline,
 	IoTodayOutline,
 } from 'react-icons/io5';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	filterTodoListByWeek,
+	selectTodoList,
+} from '../../features/todo/todoSlice';
 import './calendar.scss';
 import CalendarItem from './calendarItem/CalendarItem';
 const calendarList = [
@@ -13,22 +18,25 @@ const calendarList = [
 		id: 1,
 		name: 'Today',
 		icon: <IoCalendarClearOutline size='24px' color='#246fe0' />,
-		size: 0,
 	},
 	{
 		id: 2,
 		name: 'Tomorrow',
 		icon: <IoTodayOutline size='24px' color='#058527' />,
-		size: 8,
 	},
 	{
 		id: 3,
 		name: 'Next Week',
 		icon: <IoCalendarOutline size='24px' color='#692fc2' />,
-		size: 12,
 	},
 ];
 const Calendar = () => {
+	const dispatch = useDispatch();
+	const todoList = useSelector(selectTodoList);
+	useEffect(() => {
+		console.log('1');
+		dispatch(filterTodoListByWeek());
+	}, [dispatch, todoList]);
 	return (
 		<div className='calendar'>
 			<div className='calendar__header'>

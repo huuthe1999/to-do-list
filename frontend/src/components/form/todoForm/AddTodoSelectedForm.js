@@ -58,7 +58,7 @@ const AddTodoSelectedForm = () => {
 			description,
 			date: selectedDate,
 			time: selectedTime,
-			day: selectedDate.getDay(),
+			day: new Date(selectedDate).getDay(),
 			color: randomColor(),
 			projectId: projectSelected._id,
 		};

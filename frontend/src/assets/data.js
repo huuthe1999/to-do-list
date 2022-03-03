@@ -22,3 +22,5 @@ export const colourOptions = [
 ];
 
 export const defaultTodoList = ['Today', 'Tomorrow', 'Next Week'];
+
+export const dayList = [0, 1, 2, 3, 4, 5, 6];

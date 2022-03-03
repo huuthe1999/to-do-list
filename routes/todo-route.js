@@ -1,7 +1,12 @@
 const express = require('express');
-const { getTodoList, createTodo } = require('../controllers/todo-controller');
+const {
+	getTodoList,
+	createTodo,
+	getTodoListByWeek,
+} = require('../controllers/todo-controller');
 const router = express.Router();
 
+router.get('/filter', getTodoListByWeek);
 router.get('/:pId', getTodoList);
 router.post('/:pId', createTodo);
 

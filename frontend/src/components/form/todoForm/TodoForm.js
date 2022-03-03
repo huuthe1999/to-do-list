@@ -1,4 +1,5 @@
-import DateFnsUtils from '@date-io/date-fns'; // choose your lib
+// import DateFnsUtils from '@date-io/date-fns'; // choose your lib
+import MomentUtils from '@date-io/moment';
 import { createTheme } from '@material-ui/core';
 import { lightBlue } from '@material-ui/core/colors';
 import {
@@ -56,7 +57,7 @@ const TodoForm = ({
 		setAllowAddForm(title ? true : false);
 	}, [title, todoProject, projectList, checkItemCalender]);
 	return (
-		<MuiPickersUtilsProvider utils={DateFnsUtils}>
+		<MuiPickersUtilsProvider utils={MomentUtils}>
 			<ThemeProvider theme={materialTheme}>
 				<section className='todoForm'>
 					<form onSubmit={handleSubmit}>
@@ -96,7 +97,7 @@ const TodoForm = ({
 								</div>
 								<DatePicker
 									value={day}
-									format='dd/MM/yyyy'
+									format='DD/MM/yyyy'
 									disablePast
 									onChange={handleChangeDay}
 								/>

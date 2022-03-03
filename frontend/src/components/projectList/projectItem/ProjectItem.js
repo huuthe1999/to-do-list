@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoCloseOutline, IoPencilOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -19,6 +19,12 @@ const ProjectItem = ({ project, edit, handleShowEdit }) => {
 		setIsDeleteForm(value);
 		setShowModal(true);
 	};
+
+	useEffect(() => {
+		return () => {
+			setShowModal(false);
+		};
+	}, [project]);
 	return (
 		<>
 			<li
