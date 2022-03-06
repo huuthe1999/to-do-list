@@ -38,16 +38,12 @@ const calendarList = [
 const Calendar = () => {
 	const dispatch = useDispatch();
 	const todoList = useSelector(selectTodoList);
-	const todoListByToday = useSelector(selectTodoListByToday);
-	const todoListByTomorrow = useSelector(selectTodoListByTomorrow);
 	const todo = useSelector(selectTodo);
 	useEffect(() => {
-		console.log('todoToday', todo);
 		dispatch(filterTodoListByToday());
 	}, [dispatch, todo]);
 
 	useEffect(() => {
-		console.log('todoTomorrow', todo);
 		dispatch(filterTodoListByTomorrow());
 	}, [dispatch, todo]);
 

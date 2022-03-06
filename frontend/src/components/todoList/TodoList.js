@@ -68,7 +68,7 @@ const TodoList = () => {
 					nameProject={nameProject}
 				/>
 			))
-		) : todoList.length > 0 ? (
+		) : todoList.length > 0 && !checkCalenderItem(project) ? (
 			todoList.map(todo => (
 				<ToDoItem
 					key={todo._id}

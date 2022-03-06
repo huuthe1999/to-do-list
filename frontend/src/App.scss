@@ -16,9 +16,12 @@
 	// Header
 	--hd-text-color: #ffffff;
 	--hd-icon-color-hover: #202020;
+
+	--animate-duration: 0.5s;
 }
 
 .app {
+	position: relative;
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 16px;
 	width: 100vw;
@@ -47,4 +50,27 @@ a {
 
 ul {
 	list-style-type: none;
+}
+
+small {
+	font-weight: 500;
+}
+.colored-toast.swal2-icon-success {
+	background-color: #07bc0c !important;
+}
+
+.colored-toast.swal2-icon-error {
+	background-color: #c84243 !important;
+}
+
+.colored-toast .swal2-title {
+	color: white !important;
+}
+
+.colored-toast .swal2-close {
+	color: white !important;
+}
+
+.colored-toast .swal2-html-container {
+	color: white !important;
 }

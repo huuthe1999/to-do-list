@@ -14,17 +14,19 @@ exports.getTodoListFilter = asyncHandler(async (req, res) => {
 		const todoList = await Todo.find({
 			date: { $gte: startDate, $lte: endDate },
 		})
+			.lean()
 			.populate({
 				path: 'projectId',
-				select: '-_id name',
+				select: '_id name',
 			})
 			.sort({ created_at: -1 })
-			.lean()
+
 			.exec();
 
 		todoList.forEach(todo => {
 			const newPropsObj = {
 				nameProject: todo.projectId.name,
+				idProject: todo.projectId._id,
 			};
 			delete todo.projectId;
 			return Object.assign(todo, newPropsObj);
@@ -49,7 +51,7 @@ exports.getTodoList = asyncHandler(async (req, res) => {
 			.exec();
 		return res.status(200).json(resultAction.todoListId);
 	} catch (error) {
-		res.status(400).json(error);
+		res.status(400).json({ message: 'Error get todo list' });
 	}
 });
 
@@ -79,4 +81,33 @@ exports.createTodo = asyncHandler(async (req, res) => {
 	} catch (error) {
 		res.status(400).json({ message: 'Create todo failed' });
 	}
+});
+
+exports.deleteTodo = asyncHandler(async (req, res) => {
+	let { tId } = req.params;
+	if (!tId) {
+		return res.status(400).json({
+			message: 'You must provide a id todo',
+		});
+	}
+
+	let todo;
+	try {
+		todo = await Todo.findOneAndRemove({ _id: tId });
+	} catch (err) {
+		return res.status(400).json({ message: 'You provide a wrong id todo' });
+	}
+
+	if (!todo) {
+		return res.status(404).json({ message: 'Todo not found' });
+	}
+
+	try {
+		await Project.findByIdAndUpdate(todo.projectId, {
+			$pull: { todoListId: todo._id },
+		});
+	} catch (error) {
+		return res.status(400).json({ message: 'Delete todo failed' });
+	}
+	res.status(200).json({ todo, message: 'Delete todo success' });
 });

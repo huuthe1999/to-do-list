@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateProject } from '../../../features/project/projectSlice';
 import ProjectForm from './ProjectForm';
-const EditProjectForm = ({ id, name, color, setShowModal }) => {
+const EditProjectForm = ({ id, name, color, setShowModal, handleShowEdit }) => {
 	const [nameProject, setNameProject] = useState(name);
 	const [colorProject, setColorProject] = useState(color);
 	const dispatch = useDispatch();
 	const handleSubmitForm = e => {
 		e.preventDefault();
+		//Check nothing change
 		if (nameProject === name && colorProject === color) {
 			setShowModal(false);
 			return;
@@ -18,6 +19,7 @@ const EditProjectForm = ({ id, name, color, setShowModal }) => {
 		};
 		dispatch(updateProject({ id, updatedProject }));
 		setShowModal(false);
+		handleShowEdit();
 	};
 
 	const handleChangeColorProject = e => {

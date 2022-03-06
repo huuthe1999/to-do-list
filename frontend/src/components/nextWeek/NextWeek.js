@@ -26,7 +26,10 @@ const NextWeek = () => {
 
 	useEffect(() => {
 		console.log('2');
+		//Group todo list by day [{todoList:[], day: ''}]]}] day:[0..6] todoList sort field 'day' by day
 		let sortTodoList = sortTodoListByDay(dayList, todoListByDay);
+		//Sort todo list by currentDate ex today (day=4) and get next 6 days . The 7th day has today='3'
+		// =>[{todoList:[], day: '4'}...{todoList:[], day: '3'}]
 		sortTodoList = arrangeTodoListByDate(sortTodoList, new Date().getDay());
 		setWeekTodoList(sortTodoList);
 	}, [dispatch, todoList, todoListByDay]);

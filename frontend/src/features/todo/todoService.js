@@ -27,12 +27,18 @@ const createTodo = async (id, newTodo) => {
 	return res.data;
 };
 
+const deleteTodo = async id => {
+	const res = await AXIOS_INSTANCE.delete(`${END_POINT}/${id}`);
+	return res.data;
+};
+
 const todoService = {
 	createTodo,
 	getTodoList,
 	filterTodoListByToday,
 	filterTodoListByTomorrow,
 	filterTodoListByWeek,
+	deleteTodo,
 };
 
 export default todoService;

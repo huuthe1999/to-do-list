@@ -1,18 +1,76 @@
+import { unwrapResult } from '@reduxjs/toolkit';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
 	BsArrowCounterclockwise,
-	BsCheckCircleFill,
+	BsCheckCircle,
 	BsCircle,
 	BsTrash,
 } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import { removeTodoFromProjectList } from '../../../features/project/projectSlice';
+import { deleteTodo } from '../../../features/todo/todoSlice';
 import './todoItem.scss';
 const ToDoItem = ({ todo, nameProject }) => {
+	const dispatch = useDispatch();
 	const [hoverCheck, setHoverCheck] = useState(false);
 	const [hoverTasks, setHoverTasks] = useState(false);
 
 	const dateFormat = moment(todo.date).format('dddd, DD/MM/YYYY');
 	const timeFormat = moment(todo.date).format('HH:mm A ');
+
+	const handleDelete = () => {
+		Swal.fire({
+			title: `Are you sure you want to delete ${todo.name} ?`,
+			icon: 'warning',
+			showClass: {
+				popup: 'animate__animated animate__fadeInDown',
+			},
+			hideClass: {
+				popup: 'animate__animated animate__fadeOutUp',
+			},
+			reverseButtons: false,
+			confirmButtonColor: '#d50000',
+			showCancelButton: true,
+			confirmButtonText: 'Delete',
+		}).then(async result => {
+			if (result.isConfirmed) {
+				const Toast = Swal.mixin({
+					toast: true,
+					position: 'bottom-right',
+					iconColor: 'white',
+					customClass: {
+						popup: 'colored-toast',
+					},
+					showConfirmButton: false,
+					timer: 2000,
+				});
+
+				try {
+					const result = unwrapResult(
+						await dispatch(deleteTodo(todo._id)),
+					);
+					if (result) {
+						await dispatch(removeTodoFromProjectList(result.todo));
+						Toast.fire({
+							icon: 'success',
+							title: result.message,
+						});
+					}
+				} catch (error) {
+					const message =
+						error.response?.data?.message ||
+						error.message ||
+						error.toString();
+					Toast.fire({
+						icon: 'error',
+						title: message,
+					});
+				}
+			}
+		});
+	};
 	return (
 		<div className='todoItem'>
 			<div className='todoItem__container'>
@@ -22,15 +80,15 @@ const ToDoItem = ({ todo, nameProject }) => {
 					className='todoItem__container--check'>
 					{todo.checked ? (
 						<span>
-							<BsCheckCircleFill color='#bebebe' />
+							<BsCheckCircle color={todo.color} size='1.3em' />
 						</span>
 					) : hoverCheck ? (
 						<span>
-							<BsCheckCircleFill color='#bebebe' />
+							<BsCheckCircle color={todo.color} size='1.3em' />
 						</span>
 					) : (
 						<span>
-							<BsCircle color={todo.color} />
+							<BsCircle color={todo.color} size='1.3em' />
 						</span>
 					)}
 				</div>
@@ -60,8 +118,8 @@ const ToDoItem = ({ todo, nameProject }) => {
 
 					{!todo.checked && hoverTasks && (
 						<div className='todoItem__container--delete todoItem__container--actions'>
-							<span>
-								<BsTrash title='Delete task' />
+							<span onClick={handleDelete}>
+								<BsTrash size='1.2em' title='Delete task' />
 							</span>
 						</div>
 					)}

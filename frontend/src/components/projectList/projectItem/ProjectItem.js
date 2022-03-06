@@ -70,6 +70,7 @@ const ProjectItem = ({ project, edit, handleShowEdit }) => {
 							name={project.name}
 							color={project.color}
 							setShowModal={setShowModal}
+							handleShowEdit={handleShowEdit}
 						/>
 					) : (
 						<DeleteProjectForm

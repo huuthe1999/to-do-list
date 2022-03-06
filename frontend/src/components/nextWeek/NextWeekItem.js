@@ -11,9 +11,10 @@ const NextWeekItem = ({ todo }) => {
 			style={{
 				pointerEvents: todo.todoByDay.length > 0 ? 'auto' : 'none',
 			}}
-			onClick={() => setActive(!active)}
-			className={`nextWeek__container ${active ? 'active' : ''}`}>
-			<div className='nextWeek__day'>
+			className={`nextWeek__container ${
+				active && todo.todoByDay.length > 0 ? 'active' : ''
+			}`}>
+			<div className='nextWeek__day' onClick={() => setActive(!active)}>
 				<div className='nextWeek__day--title'>
 					<h4>
 						{moment(todo.day, 'd').format('dddd')}

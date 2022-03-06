@@ -89,6 +89,22 @@ export const createTodo = createAsyncThunk(
 	},
 );
 
+export const deleteTodo = createAsyncThunk(
+	'todo/deleteTodo',
+	async (id, thunkAPI) => {
+		try {
+			const res = await todoService.deleteTodo(id);
+			return res;
+		} catch (error) {
+			const message =
+				error.response?.data?.message ||
+				error.message ||
+				error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+	},
+);
+
 export const todoSlice = createSlice({
 	name: 'todo',
 	initialState,
@@ -102,14 +118,27 @@ export const todoSlice = createSlice({
 		filterTodoList: (state, action) => {
 			const id = action.payload;
 			state.todoListByToday = state.todoListByToday.filter(
-				todo => todo._id !== id,
+				todo => todo.idProject !== id,
 			);
 			state.todoListByTomorrow = state.todoListByTomorrow.filter(
-				todo => todo._id !== id,
+				todo => todo.idProject !== id,
 			);
 			state.todoListByDay = state.todoListByDay.filter(
-				todo => todo._id !== id,
+				todo => todo.idProject !== id,
 			);
+		},
+		updateTodoList: (state, action) => {
+			const { _id, name } = action.payload;
+			state.todoListByToday.forEach(todo => {
+				if (todo.idProject === _id) {
+					todo.nameProject = name;
+				}
+			});
+			state.todoListByTomorrow.forEach(todo => {
+				if (todo.idProject === _id) {
+					todo.nameProject = name;
+				}
+			});
 		},
 	},
 	extraReducers: {
@@ -145,10 +174,20 @@ export const todoSlice = createSlice({
 		[createTodo.rejected]: (state, action) => {
 			state.error = action.payload;
 		},
+		[deleteTodo.fulfilled]: (state, action) => {
+			state.todoList = state.todoList.filter(
+				todo => todo._id !== action.payload.todo._id,
+			);
+			state.todo = action.payload.todo;
+		},
+		[deleteTodo.rejected]: (state, action) => {
+			state.error = action.payload;
+		},
 	},
 });
 
-export const { setSelectTodo, setTodoList, filterTodoList } = todoSlice.actions;
+export const { setSelectTodo, setTodoList, filterTodoList, updateTodoList } =
+	todoSlice.actions;
 
 export const selectTodo = state => state.todo.todo;
 export const selectTodoList = state => state.todo.todoList;

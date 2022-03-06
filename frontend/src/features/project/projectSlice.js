@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { defaultTodoList } from '../../assets/data';
+import { updateTodoList } from '../todo/todoSlice';
 import projectService from './projectService';
 const initialState = {
 	defaultProject: 'Today',
@@ -66,6 +67,7 @@ export const updateProject = createAsyncThunk(
 	async ({ id, updatedProject }, thunkAPI) => {
 		try {
 			const res = await projectService.updateProject(id, updatedProject);
+			thunkAPI.dispatch(updateTodoList(res));
 			return res;
 		} catch (error) {
 			const message =
@@ -117,6 +119,23 @@ export const projectSlice = createSlice({
 				state.projectList[projectIndex].todoListId.push(_id);
 			}
 		},
+		removeTodoFromProjectList: (state, action) => {
+			const { projectId, _id } = action.payload;
+			const projectIndex = state.projectList.findIndex(
+				project => project._id === projectId,
+			);
+			if (projectIndex !== -1) {
+				const todoIndex = state.projectList[
+					projectIndex
+				].todoListId.findIndex(todoId => todoId === _id);
+				if (todoIndex !== -1) {
+					state.projectList[projectIndex].todoListId.splice(
+						todoIndex,
+						1,
+					);
+				}
+			}
+		},
 	},
 	extraReducers: {
 		[getProjectList.fulfilled]: (state, action) => {
@@ -149,10 +168,12 @@ export const projectSlice = createSlice({
 		[updateProject.fulfilled]: (state, action) => {
 			state.selectProject = action.payload;
 			const { _id, name, color } = action.payload;
-			const existingProject = state.projectList.find(p => p._id === _id);
-			if (existingProject) {
-				existingProject.name = name;
-				existingProject.color = color;
+			const projectIndex = state.projectList.findIndex(
+				p => p._id === _id,
+			);
+			if (projectIndex !== -1) {
+				state.projectList[projectIndex].name = name;
+				state.projectList[projectIndex].color = color;
 			}
 		},
 		[updateProject.rejected]: (state, action) => {
@@ -181,6 +202,7 @@ export const {
 	setSelectProject,
 	setProjectList,
 	addTodoToProjectList,
+	removeTodoFromProjectList,
 } = projectSlice.actions;
 
 export const selectProject = state => state.project.selectProject;

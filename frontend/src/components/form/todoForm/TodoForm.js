@@ -1,13 +1,18 @@
 // import DateFnsUtils from '@date-io/date-fns'; // choose your lib
-import MomentUtils from '@date-io/moment';
-import { createTheme } from '@material-ui/core';
-import { lightBlue } from '@material-ui/core/colors';
-import {
-	DatePicker,
-	MuiPickersUtilsProvider,
-	TimePicker,
-} from '@material-ui/pickers';
-import { ThemeProvider } from '@material-ui/styles';
+// import { createTheme } from '@material-ui/core';
+// import { lightBlue } from '@material-ui/core/colors';
+// import {
+// 	DatePicker,
+// 	MuiPickersUtilsProvider,
+// 	TimePicker,
+// } from '@material-ui/pickers';
+// import { ThemeProvider } from '@material-ui/styles';
+import { DatePicker, LocalizationProvider, TimePicker } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import { lightBlue } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import { ThemeProvider } from '@mui/styles';
 import { useEffect, useState } from 'react';
 import { BsAlarm, BsCalendarDay, BsClock, BsTag, BsXLg } from 'react-icons/bs';
 import { checkCalenderItem } from '../../../helpers/checkCalenderItem';
@@ -57,7 +62,8 @@ const TodoForm = ({
 		setAllowAddForm(title ? true : false);
 	}, [title, todoProject, projectList, checkItemCalender]);
 	return (
-		<MuiPickersUtilsProvider utils={MomentUtils}>
+		// <LocalizationProvider utils={MomentUtils}>
+		<LocalizationProvider dateAdapter={DateAdapter}>
 			<ThemeProvider theme={materialTheme}>
 				<section className='todoForm'>
 					<form onSubmit={handleSubmit}>
@@ -97,9 +103,16 @@ const TodoForm = ({
 								</div>
 								<DatePicker
 									value={day}
-									format='DD/MM/yyyy'
+									inputFormat='dddd, DD/MM/YYYY'
+									orientation='landscape'
 									disablePast
 									onChange={handleChangeDay}
+									renderInput={params => (
+										<TextField
+											variant='standard'
+											{...params}
+										/>
+									)}
 								/>
 							</div>
 							<div className='todoForm__main--pickTime'>
@@ -108,8 +121,14 @@ const TodoForm = ({
 									<p>Choose time</p>
 								</div>
 								<TimePicker
+									renderInput={params => (
+										<TextField
+											variant='standard'
+											{...params}
+										/>
+									)}
 									value={time}
-									format='HH:mm'
+									inputFormat='HH:mm A'
 									ampm={false}
 									minutesStep={5}
 									onChange={handleChangeTime}
@@ -182,7 +201,7 @@ const TodoForm = ({
 					</form>
 				</section>
 			</ThemeProvider>
-		</MuiPickersUtilsProvider>
+		</LocalizationProvider>
 	);
 };
 
