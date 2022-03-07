@@ -27,6 +27,12 @@ const createTodo = async (id, newTodo) => {
 	return res.data;
 };
 
+const updateTodo = async (id, todo) => {
+	// const res = await AXIOS_INSTANCE.put(`${END_POINT}/${id}`, todo);
+	// return res.data;
+	return AXIOS_INSTANCE.put(`${END_POINT}/${id}`, todo);
+};
+
 const deleteTodo = async id => {
 	const res = await AXIOS_INSTANCE.delete(`${END_POINT}/${id}`);
 	return res.data;
@@ -34,6 +40,7 @@ const deleteTodo = async id => {
 
 const todoService = {
 	createTodo,
+	updateTodo,
 	getTodoList,
 	filterTodoListByToday,
 	filterTodoListByTomorrow,

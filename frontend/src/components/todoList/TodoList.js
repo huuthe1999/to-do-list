@@ -4,6 +4,7 @@ import { defaultTodoList } from '../../assets/data';
 import { selectProject } from '../../features/project/projectSlice';
 import {
 	getTodoList,
+	selectTodo,
 	selectTodoList,
 	selectTodoListByToday,
 	selectTodoListByTomorrow,
@@ -19,6 +20,7 @@ const TodoList = () => {
 	const todoList = useSelector(selectTodoList);
 	const dispatch = useDispatch();
 	const project = useSelector(selectProject);
+	const todo = useSelector(selectTodo);
 	const todoListByToday = useSelector(selectTodoListByToday);
 	const todoListByTomorrow = useSelector(selectTodoListByTomorrow);
 	const [allowAddTodoForm, setAllowAddTodoForm] = useState(false);
@@ -33,7 +35,7 @@ const TodoList = () => {
 		if (!isCalendarItem) {
 			dispatch(getTodoList(project._id));
 		}
-	}, [dispatch, project]);
+	}, [dispatch, project, todo]);
 
 	// useEffect(() => {
 	// 	const isCalendarItem = checkCalenderItem(project);

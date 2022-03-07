@@ -26,7 +26,7 @@ exports.getTodoListFilter = asyncHandler(async (req, res) => {
 		todoList.forEach(todo => {
 			const newPropsObj = {
 				nameProject: todo.projectId.name,
-				idProject: todo.projectId._id,
+				projectId: todo.projectId._id,
 			};
 			delete todo.projectId;
 			return Object.assign(todo, newPropsObj);
@@ -36,6 +36,7 @@ exports.getTodoListFilter = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: 'Error filter todo list' });
 	}
 });
+
 exports.getTodoList = asyncHandler(async (req, res) => {
 	const { pId } = req.params;
 	if (!pId) {
@@ -83,8 +84,56 @@ exports.createTodo = asyncHandler(async (req, res) => {
 	}
 });
 
+exports.updateTodo = asyncHandler(async (req, res) => {
+	const { tId } = req.params;
+	const newTodo = req.body;
+	if (!tId) {
+		return res.status(400).json({
+			message: 'You must provide a id todo',
+		});
+	}
+
+	if (!newTodo) {
+		return res.status(400).json({
+			message: 'You must provide a project',
+		});
+	}
+	let beforeTodo, updatedTodo;
+
+	try {
+		beforeTodo = await Todo.findById(tId);
+	} catch (error) {
+		return res.status(400).json({ message: 'Error get todo' });
+	}
+
+	try {
+		updatedTodo = await Todo.findOneAndUpdate({ _id: tId }, newTodo, {
+			returnOriginal: false,
+		});
+	} catch (err) {
+		return res.status(400).json({ message: 'You provide a wrong id todo' });
+	}
+
+	if (!updatedTodo) {
+		return res.status(404).json({ message: 'Update todo failed' });
+	}
+	if (beforeTodo.projectId !== updatedTodo.projectId) {
+		try {
+			await Project.findByIdAndUpdate(beforeTodo.projectId, {
+				$pull: { todoListId: tId },
+			});
+			await Project.findByIdAndUpdate(updatedTodo.projectId, {
+				$push: { todoListId: tId },
+			});
+		} catch (error) {
+			return res.status(400).json({ message: 'Update project failed' });
+		}
+	}
+	res.status(200).json(updatedTodo);
+});
+
 exports.deleteTodo = asyncHandler(async (req, res) => {
-	let { tId } = req.params;
+	const { tId } = req.params;
 	if (!tId) {
 		return res.status(400).json({
 			message: 'You must provide a id todo',

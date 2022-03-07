@@ -55,6 +55,10 @@ ul {
 small {
 	font-weight: 500;
 }
+
+textarea::-webkit-scrollbar {
+	width: 0px;
+}
 .colored-toast.swal2-icon-success {
 	background-color: #07bc0c !important;
 }

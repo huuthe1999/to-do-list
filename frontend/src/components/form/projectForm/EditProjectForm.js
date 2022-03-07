@@ -37,7 +37,7 @@ const EditProjectForm = ({ id, name, color, setShowModal, handleShowEdit }) => {
 			handleSetName={handleSetNameProject}
 			colorProject={colorProject}
 			handleSetColorProject={handleChangeColorProject}
-			confirmButtonText='Change name'
+			confirmButtonText='Change'
 			setShowModal={setShowModal}
 		/>
 	);

@@ -1,6 +1,6 @@
 .todoItem {
 	cursor: pointer;
-	height: 90px;
+	height: 95px;
 	margin-bottom: 10px;
 	padding: 0.5rem 0.8rem;
 
@@ -20,11 +20,22 @@
 			height: 100%;
 			display: flex;
 			align-items: center;
+			justify-content: space-between;
+			overflow: hidden;
+			padding: 0.6rem 0.3rem;
 		}
 		&--content {
+			overflow: hidden;
 			position: relative;
-			flex: 1;
 			margin: 10px;
+			flex: 1;
+			& > h4,
+			& > p {
+				word-break: break-all;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
 			&-line {
 				background-color: #bebebe;
 				height: 1px;
@@ -38,7 +49,7 @@
 			}
 
 			& > span {
-				color: #918e8e;
+				color: #5a5959;
 				font-size: 13px;
 			}
 		}
@@ -54,7 +65,7 @@
 			&:hover {
 				transform: scale(0.9);
 				background-color: #e0e0e0;
-				color: red;
+				color: rgb(224, 2, 2);
 			}
 			& > span {
 				display: flex;

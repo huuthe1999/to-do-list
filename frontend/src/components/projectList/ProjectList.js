@@ -6,12 +6,14 @@ import {
 	getProjectList,
 	selectProjectList,
 } from '../../features/project/projectSlice';
+import { selectTodo } from '../../features/todo/todoSlice';
 import AddProjectForm from '../form/projectForm/AddProjectForm';
 import ProjectItem from './projectItem/ProjectItem';
 import './projectList.scss';
 
 const ProjectList = () => {
 	const projectList = useSelector(selectProjectList);
+	const todo = useSelector(selectTodo);
 	const [showMenu, setShowMenu] = useState(true);
 	const [showEdit, setShowEdit] = useState(false);
 	const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const ProjectList = () => {
 		// };
 		// response();
 		dispatch(getProjectList());
-	}, [dispatch]);
+	}, [dispatch, todo]);
 
 	const handleShowEdit = () => {
 		setShowEdit(!showEdit);

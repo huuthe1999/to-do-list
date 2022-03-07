@@ -10,7 +10,6 @@
 	overflow-y: hidden;
 	z-index: 999;
 	background-color: rgba(0, 0, 0, 0.5);
-
 	&__overlay {
 		animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
 		animation-duration: 0.3s; /* don't forget to set a duration! */

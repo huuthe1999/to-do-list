@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dayList } from '../../assets/data';
 import {
+	selectTodo,
 	selectTodoList,
 	selectTodoListByDay,
 } from '../../features/todo/todoSlice';

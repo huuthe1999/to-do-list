@@ -11,14 +11,29 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { removeTodoFromProjectList } from '../../../features/project/projectSlice';
 import { deleteTodo } from '../../../features/todo/todoSlice';
+import EditTodoForm from '../../form/todoForm/EditTodoForm';
+import Modal from '../../modal/Modal';
 import './todoItem.scss';
 const ToDoItem = ({ todo, nameProject }) => {
 	const dispatch = useDispatch();
 	const [hoverCheck, setHoverCheck] = useState(false);
 	const [hoverTasks, setHoverTasks] = useState(false);
-
-	const dateFormat = moment(todo.date).format('dddd, DD/MM/YYYY');
+	const [showModal, setShowModal] = useState(false);
+	const dateFormat = moment(todo.date).calendar(
+		{
+			sameDay: '[Today]',
+			nextDay: '[Tomorrow]',
+			nextWeek: 'dddd, DD/MM/YYYY',
+			lastDay: '[Yesterday]',
+			lastWeek: '[Last] dddd',
+			sameElse: 'dddd, DD/MM/YYYY',
+		}
+	);
 	const timeFormat = moment(todo.date).format('HH:mm A ');
+
+	const handleShowModal = () => {
+		setShowModal(false);
+	};
 
 	const handleDelete = () => {
 		Swal.fire({
@@ -72,60 +87,80 @@ const ToDoItem = ({ todo, nameProject }) => {
 		});
 	};
 	return (
-		<div className='todoItem'>
-			<div className='todoItem__container'>
-				<div
-					onMouseEnter={() => setHoverCheck(true)}
-					onMouseLeave={() => setHoverCheck(false)}
-					className='todoItem__container--check'>
-					{todo.checked ? (
-						<span>
-							<BsCheckCircle color={todo.color} size='1.3em' />
-						</span>
-					) : hoverCheck ? (
-						<span>
-							<BsCheckCircle color={todo.color} size='1.3em' />
-						</span>
-					) : (
-						<span>
-							<BsCircle color={todo.color} size='1.3em' />
-						</span>
-					)}
-				</div>
-				<div
-					onMouseEnter={() => setHoverTasks(true)}
-					onMouseLeave={() => setHoverTasks(false)}
-					className='todoItem__container--contentWrapper'>
-					<div className='todoItem__container--content'>
-						<p>{todo.name}</p>
-						<span>
-							{dateFormat} - {timeFormat} -{' '}
-							{todo.nameProject ? todo.nameProject : nameProject}
-						</span>
-						<div
-							className={`todoItem__container--content-line ${
-								todo.checked ? 'line-through' : ''
-							}`}></div>
-					</div>
-
-					{todo.checked && (
-						<div className='todoItem__container--undo todoItem__container--actions'>
+		<>
+			<div className='todoItem'>
+				<div className='todoItem__container'>
+					<div
+						onMouseEnter={() => setHoverCheck(true)}
+						onMouseLeave={() => setHoverCheck(false)}
+						className='todoItem__container--check'>
+						{todo.checked ? (
 							<span>
-								<BsArrowCounterclockwise title='Undo task' />
+								<BsCheckCircle
+									color={todo.color}
+									size='1.3em'
+								/>
 							</span>
+						) : hoverCheck ? (
+							<span>
+								<BsCheckCircle
+									color={todo.color}
+									size='1.3em'
+								/>
+							</span>
+						) : (
+							<span>
+								<BsCircle color={todo.color} size='1.3em' />
+							</span>
+						)}
+					</div>
+					<div
+						onMouseEnter={() => setHoverTasks(true)}
+						onMouseLeave={() => setHoverTasks(false)}
+						className='todoItem__container--contentWrapper'>
+						<div
+							className='todoItem__container--content'
+							onClick={() => setShowModal(true)}>
+							<h4>{todo.name}</h4>
+							{todo.description && <p>{todo.description}</p>}
+							<span>
+								{dateFormat} - {timeFormat} -{' '}
+								{todo.nameProject
+									? todo.nameProject
+									: nameProject}
+							</span>
+							<div
+								className={`todoItem__container--content-line ${
+									todo.checked ? 'line-through' : ''
+								}`}></div>
 						</div>
-					)}
 
-					{!todo.checked && hoverTasks && (
-						<div className='todoItem__container--delete todoItem__container--actions'>
-							<span onClick={handleDelete}>
-								<BsTrash size='1.2em' title='Delete task' />
-							</span>
-						</div>
-					)}
+						{todo.checked && (
+							<div className='todoItem__container--actions'>
+								<span>
+									<BsArrowCounterclockwise title='Undo task' />
+								</span>
+							</div>
+						)}
+
+						{!todo.checked && hoverTasks && (
+							<div className='todoItem__container--actions'>
+								<span onClick={handleDelete}>
+									<BsTrash size='1.2em' title='Delete task' />
+								</span>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
-		</div>
+			<Modal showModal={showModal} setShowModal={setShowModal}>
+				<EditTodoForm
+					todo={todo}
+					showModal={showModal}
+					setShowModal={handleShowModal}
+				/>
+			</Modal>
+		</>
 	);
 };
 

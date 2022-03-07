@@ -26,6 +26,7 @@ const AddTodoSelectedForm = () => {
 	}, [dispatch, projectSelected]);
 	const handleShowModal = () => {
 		setShowModal(false);
+		handleClear();
 	};
 	const handleChangeDay = day => {
 		setSelectedDate(day);
@@ -37,6 +38,11 @@ const AddTodoSelectedForm = () => {
 		setTitle(e.target.value);
 	};
 	const handleChangeDescription = e => {
+		if (e) {
+			const target = e.target ? e.target : e;
+			target.style.height = 'auto';
+			target.style.height = target.scrollHeight + 'px';
+		}
 		setDescription(e.target.value);
 	};
 
@@ -94,7 +100,6 @@ const AddTodoSelectedForm = () => {
 					setTodoProject={handleChangeTodoProject}
 					textButton='Add Task'
 					setShowModal={handleShowModal}
-					handleClear={handleClear}
 					allowAddTodoSelectedForm
 				/>
 			</Modal>

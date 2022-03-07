@@ -15,6 +15,8 @@ import TextField from '@mui/material/TextField';
 import { ThemeProvider } from '@mui/styles';
 import { useEffect, useState } from 'react';
 import { BsAlarm, BsCalendarDay, BsClock, BsTag, BsXLg } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { selectProject } from '../../../features/project/projectSlice';
 import { checkCalenderItem } from '../../../helpers/checkCalenderItem';
 import './todoForm.scss';
 
@@ -42,27 +44,27 @@ const TodoForm = ({
 	setTodoProject,
 	textButton,
 	setShowModal,
-	handleClear,
 	allowAddTodoSelectedForm,
 }) => {
 	const [allowAddForm, setAllowAddForm] = useState(false);
 	const checkItemCalender = checkCalenderItem(todoProject);
+	const projectSelected = useSelector(selectProject);
 	useEffect(() => {
 		if (projectList) {
+			//Check any existing project
 			setAllowAddForm(
 				!checkItemCalender &&
+					projectList.length > 0 &&
 					title &&
-					todoProject &&
-					projectList.length > 0
+					todoProject
 					? true
 					: false,
 			);
 			return;
 		}
-		setAllowAddForm(title ? true : false);
+		setAllowAddForm(title ? true : false); //Check title not empty
 	}, [title, todoProject, projectList, checkItemCalender]);
 	return (
-		// <LocalizationProvider utils={MomentUtils}>
 		<LocalizationProvider dateAdapter={DateAdapter}>
 			<ThemeProvider theme={materialTheme}>
 				<section className='todoForm'>
@@ -86,7 +88,6 @@ const TodoForm = ({
 								/>
 								<textarea
 									type='text'
-									rows={3}
 									value={description}
 									onChange={handleChangeDescription}
 									placeholder='Description'
@@ -103,6 +104,7 @@ const TodoForm = ({
 								</div>
 								<DatePicker
 									value={day}
+									mask=''
 									inputFormat='dddd, DD/MM/YYYY'
 									orientation='landscape'
 									disablePast
@@ -128,6 +130,7 @@ const TodoForm = ({
 										/>
 									)}
 									value={time}
+									mask=''
 									inputFormat='HH:mm A'
 									ampm={false}
 									minutesStep={5}
@@ -145,22 +148,33 @@ const TodoForm = ({
 								</div>
 								<div className='todoForm__main--tag-list'>
 									{projectList && projectList.length > 0 ? (
-										projectList.map(project => (
-											<div
-												key={project._id}
-												className={`${
+										projectList.map(project => {
+											let checkActiveProject = true;
+											if (todoProject.name) {
+												checkActiveProject =
 													todoProject.name ===
-														project.name &&
-													!checkItemCalender
-														? 'active'
-														: ''
-												}`}
-												onClick={() =>
-													setTodoProject(project)
-												}>
-												{project.name}
-											</div>
-										))
+													project.name;
+											} else {
+												checkActiveProject =
+													projectSelected.name ===
+													project.name;
+											}
+											return (
+												<div
+													key={project._id}
+													className={`${
+														checkActiveProject &&
+														!checkItemCalender
+															? 'active'
+															: ''
+													}`}
+													onClick={() =>
+														setTodoProject(project)
+													}>
+													{project.name}
+												</div>
+											);
+										})
 									) : allowAddTodoSelectedForm ? (
 										<div
 											className='active'
@@ -193,7 +207,6 @@ const TodoForm = ({
 								className='todoForm__footer-button'
 								onClick={() => {
 									setShowModal();
-									handleClear();
 								}}>
 								Cancel
 							</button>

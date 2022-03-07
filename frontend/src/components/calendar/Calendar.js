@@ -13,8 +13,6 @@ import {
 	filterTodoListByWeek,
 	selectTodo,
 	selectTodoList,
-	selectTodoListByToday,
-	selectTodoListByTomorrow,
 } from '../../features/todo/todoSlice';
 import './calendar.scss';
 import CalendarItem from './calendarItem/CalendarItem';
@@ -37,7 +35,7 @@ const calendarList = [
 ];
 const Calendar = () => {
 	const dispatch = useDispatch();
-	const todoList = useSelector(selectTodoList);
+	// const todoList = useSelector(selectTodoList);
 	const todo = useSelector(selectTodo);
 	useEffect(() => {
 		dispatch(filterTodoListByToday());
@@ -49,7 +47,7 @@ const Calendar = () => {
 
 	useEffect(() => {
 		dispatch(filterTodoListByWeek());
-	}, [dispatch, todoList]);
+	}, [dispatch, todo]);
 	return (
 		<div className='calendar'>
 			<div className='calendar__header'>

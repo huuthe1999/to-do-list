@@ -89,6 +89,22 @@ export const createTodo = createAsyncThunk(
 	},
 );
 
+export const updateTodo = createAsyncThunk(
+	'todo/updateTodo',
+	async ({ id, newTodo }, thunkAPI) => {
+		try {
+			const res = await todoService.updateTodo(id, newTodo);
+			return res.data;
+		} catch (error) {
+			const message =
+				error.response?.data?.message ||
+				error.message ||
+				error.toString();
+			return thunkAPI.rejectWithValue(message);
+		}
+	},
+);
+
 export const deleteTodo = createAsyncThunk(
 	'todo/deleteTodo',
 	async (id, thunkAPI) => {
@@ -112,30 +128,31 @@ export const todoSlice = createSlice({
 		setSelectTodo: (state, action) => {
 			state.todo = action.payload;
 		},
+
 		setTodoList: (state, action) => {
 			state.todoList = action.payload;
 		},
 		filterTodoList: (state, action) => {
 			const id = action.payload;
 			state.todoListByToday = state.todoListByToday.filter(
-				todo => todo.idProject !== id,
+				todo => todo.projectId !== id,
 			);
 			state.todoListByTomorrow = state.todoListByTomorrow.filter(
-				todo => todo.idProject !== id,
+				todo => todo.projectId !== id,
 			);
 			state.todoListByDay = state.todoListByDay.filter(
-				todo => todo.idProject !== id,
+				todo => todo.projectId !== id,
 			);
 		},
 		updateTodoList: (state, action) => {
 			const { _id, name } = action.payload;
 			state.todoListByToday.forEach(todo => {
-				if (todo.idProject === _id) {
+				if (todo.projectId === _id) {
 					todo.nameProject = name;
 				}
 			});
 			state.todoListByTomorrow.forEach(todo => {
-				if (todo.idProject === _id) {
+				if (todo.projectId === _id) {
 					todo.nameProject = name;
 				}
 			});
@@ -172,6 +189,12 @@ export const todoSlice = createSlice({
 			state.todo = action.payload;
 		},
 		[createTodo.rejected]: (state, action) => {
+			state.error = action.payload;
+		},
+		[updateTodo.fulfilled]: (state, action) => {
+			state.todo = action.payload;
+		},
+		[updateTodo.rejected]: (state, action) => {
 			state.error = action.payload;
 		},
 		[deleteTodo.fulfilled]: (state, action) => {
