@@ -31,7 +31,7 @@ const ProjectItem = ({ project, edit, handleShowEdit }) => {
 				style={{
 					backgroundColor:
 						project.name === projectSelected.name
-							? '#b3b3b3'
+							? 'rgb(169 196 202)'
 							: undefined,
 				}}
 				className={`projectList__content--item ${

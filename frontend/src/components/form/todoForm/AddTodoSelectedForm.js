@@ -38,11 +38,6 @@ const AddTodoSelectedForm = () => {
 		setTitle(e.target.value);
 	};
 	const handleChangeDescription = e => {
-		if (e) {
-			const target = e.target ? e.target : e;
-			target.style.height = 'auto';
-			target.style.height = target.scrollHeight + 'px';
-		}
 		setDescription(e.target.value);
 	};
 
@@ -81,8 +76,7 @@ const AddTodoSelectedForm = () => {
 			<button
 				className='todoList__title--button'
 				onClick={() => setShowModal(true)}>
-				<RiAddLine />
-				<p>Add task</p>
+				<RiAddLine title='Add new todo' />
 			</button>
 			<Modal showModal={modal} setShowModal={handleShowModal}>
 				<TodoForm

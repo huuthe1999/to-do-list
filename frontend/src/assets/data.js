@@ -24,3 +24,10 @@ export const colourOptions = [
 export const defaultTodoList = ['Today', 'Tomorrow', 'Next Week'];
 
 export const dayList = [0, 1, 2, 3, 4, 5, 6];
+
+export const todoListOptions = [
+	{ value: 'All', label: 'All' },
+	{ value: 'Expired', label: 'Expired' },
+	{ value: 'Completed', label: 'Completed' },
+	{ value: 'Incomplete', label: 'Incomplete' },
+];

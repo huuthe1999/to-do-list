@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dayList } from '../../assets/data';
 import {
-	selectTodo,
 	selectTodoList,
 	selectTodoListByDay,
 } from '../../features/todo/todoSlice';
@@ -26,7 +25,6 @@ const NextWeek = () => {
 	// }, [dispatch, todoList]);
 
 	useEffect(() => {
-		console.log('2');
 		//Group todo list by day [{todoList:[], day: ''}]]}] day:[0..6] todoList sort field 'day' by day
 		let sortTodoList = sortTodoListByDay(dayList, todoListByDay);
 		//Sort todo list by currentDate ex today (day=4) and get next 6 days . The 7th day has today='3'

@@ -27,12 +27,6 @@ const EditTodoForm = ({ todo, setShowModal, }) => {
 		setName(e.target.value);
 	};
 	const handleChangeDescription = e => {
-		if (e) {
-			console.log(e.target);
-			const target = e.target ? e.target : e;
-			target.style.height = 'auto';
-			target.style.height = target.scrollHeight + 'px';
-		}
 		setDescription(e.target.value);
 	};
 	const handleChangeTodoProject = name => {

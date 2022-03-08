@@ -1,4 +1,3 @@
-const { nn } = require('date-fns/locale');
 const asyncHandler = require('express-async-handler');
 const { formatDate } = require('../helpers/day');
 const Project = require('../models/project-model');
@@ -13,6 +12,7 @@ exports.getTodoListFilter = asyncHandler(async (req, res) => {
 	try {
 		const todoList = await Todo.find({
 			date: { $gte: startDate, $lte: endDate },
+			checked: false,
 		})
 			.lean()
 			.populate({
@@ -85,6 +85,7 @@ exports.createTodo = asyncHandler(async (req, res) => {
 });
 
 exports.updateTodo = asyncHandler(async (req, res) => {
+	const { check } = req.query;
 	const { tId } = req.params;
 	const newTodo = req.body;
 	if (!tId) {
@@ -101,17 +102,19 @@ exports.updateTodo = asyncHandler(async (req, res) => {
 	let beforeTodo, updatedTodo;
 
 	try {
-		beforeTodo = await Todo.findById(tId);
-	} catch (error) {
-		return res.status(400).json({ message: 'Error get todo' });
-	}
-
-	try {
 		updatedTodo = await Todo.findOneAndUpdate({ _id: tId }, newTodo, {
 			returnOriginal: false,
 		});
 	} catch (err) {
 		return res.status(400).json({ message: 'You provide a wrong id todo' });
+	}
+	if (check) {
+		return res.status(200).json(updatedTodo);
+	}
+	try {
+		beforeTodo = await Todo.findById(tId);
+	} catch (error) {
+		return res.status(400).json({ message: 'Error get todo' });
 	}
 
 	if (!updatedTodo) {

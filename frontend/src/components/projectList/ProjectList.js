@@ -43,7 +43,7 @@ const ProjectList = () => {
 						<span
 							style={editActiveStyle}
 							onClick={() => setShowEdit(!showEdit)}>
-							<IoPencil />
+							<IoPencil title='Edit project' />
 						</span>
 					)}
 					<AddProjectForm />

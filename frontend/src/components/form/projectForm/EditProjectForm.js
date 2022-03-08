@@ -1,20 +1,43 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateProject } from '../../../features/project/projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import {
+	selectProjectList,
+	updateProject,
+} from '../../../features/project/projectSlice';
 import ProjectForm from './ProjectForm';
 const EditProjectForm = ({ id, name, color, setShowModal, handleShowEdit }) => {
+	const projectList = useSelector(selectProjectList);
 	const [nameProject, setNameProject] = useState(name);
 	const [colorProject, setColorProject] = useState(color);
 	const dispatch = useDispatch();
-	const handleSubmitForm = e => {
+	const handleSubmitForm = async e => {
 		e.preventDefault();
 		//Check nothing change
 		if (nameProject === name && colorProject === color) {
 			setShowModal(false);
 			return;
 		}
+		if (projectList.find(project => project.name === nameProject)) {
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-right',
+				iconColor: 'white',
+				customClass: {
+					popup: 'colored-toast',
+				},
+				showConfirmButton: false,
+				timer: 2000,
+			});
+			await Toast.fire({
+				icon: 'error',
+				title: 'Project name already exists',
+			});
+			return;
+		}
+
 		const updatedProject = {
-			name: nameProject,
+			name: nameProject.trim(),
 			color: colorProject,
 		};
 		dispatch(updateProject({ id, updatedProject }));

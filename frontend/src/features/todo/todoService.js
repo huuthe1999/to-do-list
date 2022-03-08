@@ -30,7 +30,7 @@ const createTodo = async (id, newTodo) => {
 const updateTodo = async (id, todo) => {
 	// const res = await AXIOS_INSTANCE.put(`${END_POINT}/${id}`, todo);
 	// return res.data;
-	return AXIOS_INSTANCE.put(`${END_POINT}/${id}`, todo);
+	return AXIOS_INSTANCE.put(`${END_POINT}/${id}?check=${true}`, todo);
 };
 
 const deleteTodo = async id => {

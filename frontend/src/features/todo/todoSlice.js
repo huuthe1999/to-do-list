@@ -156,6 +156,16 @@ export const todoSlice = createSlice({
 					todo.nameProject = name;
 				}
 			});
+			state.todoListByDay.forEach(todo => {
+				if (todo.projectId === _id) {
+					todo.nameProject = name;
+				}
+			});
+			state.todoList.forEach(todo => {
+				if (todo.projectId === _id) {
+					todo.nameProject = name;
+				}
+			});
 		},
 	},
 	extraReducers: {

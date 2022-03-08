@@ -87,6 +87,7 @@ const TodoForm = ({
 									autoFocus
 								/>
 								<textarea
+									rows={3}
 									type='text'
 									value={description}
 									onChange={handleChangeDescription}

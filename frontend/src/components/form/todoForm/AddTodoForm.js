@@ -41,11 +41,6 @@ const AddTodoForm = () => {
 		setTitle(e.target.value);
 	};
 	const handleChangeDescription = e => {
-		if (e) {
-			const target = e.target ? e.target : e;
-			target.style.height = 'auto';
-			target.style.height = target.scrollHeight + 'px';
-		}
 		setDescription(e.target.value);
 	};
 
@@ -87,6 +82,7 @@ const AddTodoForm = () => {
 		<>
 			<button className='topbar__button rightControl'>
 				<RiAddLine
+					title='Add new todo'
 					className='topbar__button-icon'
 					onClick={() => setShowModal(true)}
 				/>
