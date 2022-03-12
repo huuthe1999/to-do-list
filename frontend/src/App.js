@@ -3,12 +3,11 @@ import React from 'react';
 import './App.scss';
 import Main from './components/main/Main';
 import SideBar from './components/sideBar/SideBar';
-import TopBar from './components/topBar/TopBar';
 
 function App() {
 	return (
 		<div className='app'>
-			<TopBar />
+			{/* <TopBar /> */}
 			<div className='container'>
 				<SideBar />
 				<Main />

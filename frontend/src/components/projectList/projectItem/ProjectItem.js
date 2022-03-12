@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IoCloseOutline, IoPencilOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -70,24 +70,56 @@ const ProjectItem = ({ project, edit, handleShowEdit, index }) => {
 					{project.name}
 				</p>
 				<div className='projectList__content--item-content'>
-					{edit ? (
-						<div className='projectList__content--item-actions'>
-							<span onClick={() => handleShowModal(false)}>
-								<IoPencilOutline />
-							</span>
-							<span onClick={() => handleShowModal(true)}>
-								<IoCloseOutline />
-							</span>
-						</div>
-					) : project.todoListId.length === 0 ? (
-						''
-					) : project.todoListId.length > 9 ? (
-						<small>
-							9<sup>+</sup>
-						</small>
-					) : (
-						<small>{project.todoListId.length}</small>
-					)}
+					<AnimatePresence>
+						{edit ? (
+							<motion.div
+								variants={item}
+								custom={index}
+								exit={{
+									opacity: 0,
+									x: '100%',
+									transition: {
+										duration: index * 0.05,
+									},
+								}}
+								className='projectList__content--item-actions'>
+								<span onClick={() => handleShowModal(false)}>
+									<IoPencilOutline />
+								</span>
+								<span onClick={() => handleShowModal(true)}>
+									<IoCloseOutline />
+								</span>
+							</motion.div>
+						) : project.todoListId.length === 0 ? (
+							''
+						) : project.todoListId.length > 9 ? (
+							<motion.small
+								variants={item}
+								custom={index}
+								exit={{
+									opacity: 0,
+									x: '100%',
+									transition: {
+										duration: index * 0.05,
+									},
+								}}>
+								9<sup>+</sup>
+							</motion.small>
+						) : (
+							<motion.small
+								variants={item}
+								custom={index}
+								exit={{
+									opacity: 0,
+									x: '100%',
+									transition: {
+										duration: index * 0.05,
+									},
+								}}>
+								{project.todoListId.length}
+							</motion.small>
+						)}
+					</AnimatePresence>
 				</div>
 			</motion.li>
 			<Modal showModal={showModal} setShowModal={setShowModal}>
