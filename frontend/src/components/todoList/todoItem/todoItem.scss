@@ -3,6 +3,9 @@
 	margin-bottom: 10px;
 	padding: 0.5rem 0.8rem;
 
+	// animation: zoomIn; /* referring directly to the animation's @keyframe declaration */
+	// animation-duration: 0.5s; /* don't forget to set a duration! */
+
 	&__container {
 		background-color: #fff;
 		padding: 0 0.5rem;

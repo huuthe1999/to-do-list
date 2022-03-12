@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
 import {
 	IoCalendarClearOutline,
@@ -12,7 +13,6 @@ import {
 	filterTodoListByTomorrow,
 	filterTodoListByWeek,
 	selectTodo,
-	selectTodoList,
 } from '../../features/todo/todoSlice';
 import './calendar.scss';
 import CalendarItem from './calendarItem/CalendarItem';
@@ -33,9 +33,52 @@ const calendarList = [
 		icon: <IoCalendarOutline size='24px' color='#692fc2' />,
 	},
 ];
+
+// const calendarContainer = {
+// 	hidden: {
+// 		maxHeight: 0,
+// 		transition: {
+// 			// when: 'afterChildren',
+// 			ease: 'easeInOut',
+// 			staggerChildren: 0.1,
+// 			staggerDirection: -1,
+// 			duration: 2,
+// 		},
+// 	},
+// 	show: {
+// 		maxHeight: '100%',
+// 		transition: {
+// 			when: 'beforeChildren',
+// 			staggerChildren: 0.1,
+// 			duration: 0.2,
+// 			ease: 'easeInOut',
+// 		},
+// 	},
+// };
+const calendarContainer = {
+	hidden: {
+		height: 44,
+		transition: {
+			// when: 'afterChildren',
+			ease: 'easeInOut',
+			staggerChildren: 0.1,
+			staggerDirection: -1,
+			duration: 0.5,
+		},
+	},
+	show: {
+		height: 'fit-content',
+		transition: {
+			when: 'beforeChildren',
+			staggerChildren: 0.1,
+			duration: 0.2,
+			ease: 'easeInOut',
+		},
+	},
+};
 const Calendar = () => {
 	const dispatch = useDispatch();
-	// const todoList = useSelector(selectTodoList);
+	const [showMenu, setShowMenu] = useState(true);
 	const todo = useSelector(selectTodo);
 	useEffect(() => {
 		dispatch(filterTodoListByToday());
@@ -49,30 +92,55 @@ const Calendar = () => {
 		dispatch(filterTodoListByWeek());
 	}, [dispatch, todo]);
 	return (
-		<div className='calendar'>
+		<motion.div
+			variants={calendarContainer}
+			initial='hidden'
+			animate={showMenu ? 'show' : 'hidden'}
+			className='calendar'>
 			<div className='calendar__header'>
 				<div className='calendar__header--title'>
 					<IoCalendarNumberOutline size='24px' />
 					<p>Calendar</p>
 				</div>
 				<div className='calendar__header--expand'>
-					<span>
-						<BsCaretUp />
-					</span>
+					<motion.span
+						initial={false}
+						animate={{ rotate: showMenu ? 0 : 180 }}
+						transition={{
+							duration: 0.2,
+						}}
+						whileTap={{
+							rotate: 180,
+							scale: 0.8,
+						}}
+						whileHover={{
+							scale: 1.2,
+						}}
+						onClick={() => setShowMenu(!showMenu)}>
+						<BsCaretUp
+							title={`${
+								showMenu
+									? 'Click to expand'
+									: 'Click to collapse'
+							}`}
+						/>
+					</motion.span>
 				</div>
 			</div>
 			<div className='calendar__content'>
-				<div className='calendar__content--wrapper'>
-					<div className='calendar__content--wrapper--inner'>
-						<ul className='calendar__content--list'>
-							{calendarList.map(({ id, ...rest }) => (
-								<CalendarItem key={id} {...rest} />
-							))}
-						</ul>
-					</div>
-				</div>
+				<ul className='calendar__content--list'>
+					<AnimatePresence>
+						{calendarList.map((item, index) => (
+							<CalendarItem
+								key={item.id}
+								index={index}
+								item={item}
+							/>
+						))}
+					</AnimatePresence>
+				</ul>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -166,7 +166,7 @@ export const projectSlice = createSlice({
 			state.error = action.payload;
 		},
 		[updateProject.fulfilled]: (state, action) => {
-			// state.selectProject = action.payload;
+			state.selectProject = action.payload;
 			const { _id, name, color } = action.payload;
 			const projectIndex = state.projectList.findIndex(
 				p => p._id === _id,

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
@@ -17,7 +18,6 @@ import AddTodoSelectedForm from '../form/todoForm/AddTodoSelectedForm';
 import NextWeek from '../nextWeek/NextWeek';
 import ToDoItem from './todoItem/ToDoItem';
 import './todoList.scss';
-
 const customStyles = {
 	container: provided => ({
 		...provided,
@@ -105,17 +105,36 @@ const TodoList = () => {
 	return (
 		<div className='todoList'>
 			<div className='todoList__title'>
-				<h2>{nameProject}</h2>
+				<AnimatePresence>
+					<motion.h2
+						initial={{ x: 300, opacity: 0 }}
+						animate={{ x: 0, opacity: 1 }}
+						exit={{ x: -300, opacity: 0 }}>
+						{nameProject}
+					</motion.h2>
+				</AnimatePresence>
 				<div className='todoList__actions'>
-					{todoList.length > 0 && !allowAddTodoForm && (
-						<Select
-							onChange={handleFilter}
-							isSearchable={false}
-							defaultValue={option}
-							options={todoListOptions}
-							styles={customStyles}
-						/>
-					)}
+					<AnimatePresence>
+						{todoList.length > 0 && !allowAddTodoForm && (
+							<motion.div
+								initial={{ x: '100%', opacity: 0 }}
+								animate={{ x: 0, opacity: 1 }}
+								exit={{ x: '100%', opacity: 0 }}
+								transition={{
+									type: 'spring',
+									stiffness: 300,
+									damping: 15,
+								}}>
+								<Select
+									onChange={handleFilter}
+									isSearchable={false}
+									defaultValue={option}
+									options={todoListOptions}
+									styles={customStyles}
+								/>
+							</motion.div>
+						)}
+					</AnimatePresence>
 					{!allowAddTodoForm ? <AddTodoSelectedForm /> : null}
 				</div>
 			</div>
@@ -127,7 +146,13 @@ const TodoList = () => {
 							? undefined
 							: 'hidden',
 				}}>
-				{project === defaultTodoList[2] ? <NextWeek /> : renderTodoList}
+				<AnimatePresence>
+					{project === defaultTodoList[2] ? (
+						<NextWeek />
+					) : (
+						renderTodoList
+					)}
+				</AnimatePresence>
 			</div>
 		</div>
 	);

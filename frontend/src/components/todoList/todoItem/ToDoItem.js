@@ -1,4 +1,5 @@
 import { unwrapResult } from '@reduxjs/toolkit';
+import { motion } from 'framer-motion';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BsCheckCircle, BsCircle, BsTrash } from 'react-icons/bs';
@@ -110,7 +111,22 @@ const ToDoItem = ({ todo, nameProject }) => {
 
 	return (
 		<>
-			<div className='todoItem'>
+			<motion.div
+				initial={{
+					opacity: 0,
+					scale: 0.5,
+				}}
+				animate={{
+					opacity: 1,
+					scale: 1,
+				}}
+				transition={{
+					type: 'spring',
+					stiffness: 300,
+					damping: 15,
+					duration: 0.2,
+				}}
+				className='todoItem'>
 				<div className='todoItem__container'>
 					<div
 						style={{
@@ -182,7 +198,7 @@ const ToDoItem = ({ todo, nameProject }) => {
 						)}
 					</div>
 				</div>
-			</div>
+			</motion.div>
 			<Modal showModal={showModal} setShowModal={setShowModal}>
 				<EditTodoForm
 					todo={todo}

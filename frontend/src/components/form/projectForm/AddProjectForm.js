@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,12 +54,18 @@ const AddProjectForm = () => {
 	};
 	return (
 		<>
-			<span>
+			<motion.span
+				whileTap={{
+					scale: 0.8,
+				}}
+				whileHover={{
+					scale: 1.2,
+				}}>
 				<IoAdd
 					title='Add new project'
 					onClick={() => setShowAddProject(true)}
 				/>
-			</span>
+			</motion.span>
 			<Modal showModal={showAddProject} setShowModal={setShowAddProject}>
 				<ProjectForm
 					handleSubmit={handleSubmitForm}

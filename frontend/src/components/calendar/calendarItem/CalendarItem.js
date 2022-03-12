@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { defaultTodoList } from '../../../assets/data';
 import {
@@ -10,27 +11,47 @@ import {
 	selectTodoListByTomorrow,
 } from '../../../features/todo/todoSlice';
 import './calendarItem.scss';
-const CalendarItem = ({ name, icon }) => {
+const calendarItem = {
+	hidden: {
+		opacity: 0,
+		x: '100%',
+	},
+	show: {
+		opacity: 1,
+		x: 0,
+	},
+};
+const CalendarItem = ({ item, index }) => {
 	const dispatch = useDispatch();
 	const todoListByToday = useSelector(selectTodoListByToday);
 	const todoListByTomorrow = useSelector(selectTodoListByTomorrow);
 	const project = useSelector(selectProject);
 	const todoListByDay = useSelector(selectTodoListByDay);
 	const sizeProject =
-		name === defaultTodoList[0]
+		item.name === defaultTodoList[0]
 			? todoListByToday.length
-			: name === defaultTodoList[1]
+			: item.name === defaultTodoList[1]
 			? todoListByTomorrow.length
 			: todoListByDay.length;
 	return (
-		<li
-			style={{
-				backgroundColor: project === name ? '#b3b3b3' : undefined,
+		<motion.li
+			variants={calendarItem}
+			exit={{
+				opacity: 0,
+				x: '-100%',
 			}}
-			onClick={() => dispatch(setSelectProject(name))}
+			whileHover={{
+				scale: 1.05,
+				originX: 0,
+				boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.6)',
+			}}
+			style={{
+				backgroundColor: project === item.name ? '#6accbc' : undefined,
+			}}
+			onClick={() => dispatch(setSelectProject(item.name))}
 			className='calendar__content--item'>
-			<span className='calendar__content--item-icon'>{icon}</span>
-			<p>{name}</p>
+			<span className='calendar__content--item-icon'>{item.icon}</span>
+			<p>{item.name}</p>
 			<div className='calendar__content--item-content'>
 				{sizeProject === 0 ? (
 					''
@@ -42,7 +63,7 @@ const CalendarItem = ({ name, icon }) => {
 					<small>{sizeProject}</small>
 				)}
 			</div>
-		</li>
+		</motion.li>
 	);
 };
 

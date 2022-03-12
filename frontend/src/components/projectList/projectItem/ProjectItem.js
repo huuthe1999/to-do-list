@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IoCloseOutline, IoPencilOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +11,21 @@ import EditProjectForm from '../../form/projectForm/EditProjectForm';
 import Modal from '../../modal/Modal';
 import './projectItem.scss';
 
-const ProjectItem = ({ project, edit, handleShowEdit }) => {
+const item = {
+	hidden: {
+		opacity: 0,
+		x: '100%',
+	},
+	show: index => ({
+		opacity: 1,
+		x: 0,
+		transition: {
+			delay: index * 0.1,
+		},
+	}),
+};
+
+const ProjectItem = ({ project, edit, handleShowEdit, index }) => {
 	const projectSelected = useSelector(selectProject);
 	const dispatch = useDispatch();
 	const [showModal, setShowModal] = useState(false);
@@ -27,11 +42,22 @@ const ProjectItem = ({ project, edit, handleShowEdit }) => {
 	}, [project]);
 	return (
 		<>
-			<li
+			<motion.li
+				variants={item}
+				exit={{
+					opacity: 0,
+					x: '-100%',
+				}}
+				custom={index}
+				whileHover={{
+					scale: 1.05,
+					originX: 0,
+					boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.6)',
+				}}
 				style={{
 					backgroundColor:
 						project.name === projectSelected.name
-							? 'rgb(169 196 202)'
+							? '#6accbc'
 							: undefined,
 				}}
 				className={`projectList__content--item ${
@@ -63,26 +89,26 @@ const ProjectItem = ({ project, edit, handleShowEdit }) => {
 						<small>{project.todoListId.length}</small>
 					)}
 				</div>
-				<Modal showModal={showModal} setShowModal={setShowModal}>
-					{!isDeleteForm ? (
-						<EditProjectForm
-							id={project._id}
-							name={project.name}
-							color={project.color}
-							setShowModal={setShowModal}
-							handleShowEdit={handleShowEdit}
-						/>
-					) : (
-						<DeleteProjectForm
-							id={project._id}
-							name={project.name}
-							setShowModal={setShowModal}
-							isDeleteForm={isDeleteForm}
-							handleShowEdit={handleShowEdit}
-						/>
-					)}
-				</Modal>
-			</li>
+			</motion.li>
+			<Modal showModal={showModal} setShowModal={setShowModal}>
+				{!isDeleteForm ? (
+					<EditProjectForm
+						id={project._id}
+						name={project.name}
+						color={project.color}
+						setShowModal={setShowModal}
+						handleShowEdit={handleShowEdit}
+					/>
+				) : (
+					<DeleteProjectForm
+						id={project._id}
+						name={project.name}
+						setShowModal={setShowModal}
+						isDeleteForm={isDeleteForm}
+						handleShowEdit={handleShowEdit}
+					/>
+				)}
+			</Modal>
 		</>
 	);
 };

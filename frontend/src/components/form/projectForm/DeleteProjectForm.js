@@ -12,7 +12,7 @@ const DeleteProjectForm = ({
 	const dispatch = useDispatch();
 	const handleSubmitForm = async e => {
 		e.preventDefault();
-		await dispatch(deleteProject(id));
+		setTimeout(async () => await dispatch(deleteProject(id)), 500);
 		await dispatch(setTodoList([]));
 		await dispatch(filterTodoList(id));
 		setShowModal(false);

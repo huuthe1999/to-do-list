@@ -6,7 +6,7 @@
 	padding: 5px 16px 5px 12px;
 	cursor: pointer;
 	background-color: transparent;
-
+	margin: 10px 0;
 	&-icon {
 		margin-left: 7px;
 	}
@@ -19,10 +19,6 @@
 		white-space: nowrap;
 		overflow: hidden;
 		cursor: pointer;
-	}
-
-	&:hover {
-		background-color: #eeeeee;
 	}
 
 	&-content {
