@@ -47,7 +47,7 @@ const AddProjectForm = () => {
 			name: nameProject.trim(),
 			color: colorProject,
 		};
-		await dispatch(createProject(newProject));
+		dispatch(createProject(newProject));
 		setNameProject('');
 		setColorProject(colourOptions[6]);
 		setShowAddProject(false);

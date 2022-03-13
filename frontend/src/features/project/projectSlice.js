@@ -14,7 +14,7 @@ export const getProjectList = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const res = await projectService.getProjectList();
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
@@ -35,7 +35,7 @@ export const getProject = createAsyncThunk(
 	async (id, thunkAPI) => {
 		try {
 			const res = await projectService.getProject(id);
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
@@ -51,7 +51,7 @@ export const createProject = createAsyncThunk(
 	async (project, thunkAPI) => {
 		try {
 			const res = await projectService.createProject(project);
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
@@ -68,7 +68,7 @@ export const updateProject = createAsyncThunk(
 		try {
 			const res = await projectService.updateProject(id, updatedProject);
 			thunkAPI.dispatch(updateTodoList(res));
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
@@ -85,7 +85,7 @@ export const deleteProject = createAsyncThunk(
 		try {
 			const res = await projectService.deleteProject(id);
 			// thunkAPI.dispatch(setTodoList([]));
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||

@@ -1,41 +1,33 @@
 const { AXIOS_INSTANCE } = require('../../config/api');
 const END_POINT = '/todos';
 
-const filterTodoListByToday = async () => {
-	const res = await AXIOS_INSTANCE.get(`${END_POINT}/filter?today=${true}`);
-	return res.data;
+const filterTodoListByToday = () => {
+	return AXIOS_INSTANCE.get(`${END_POINT}/filter?today=${true}`);
 };
 
-const filterTodoListByTomorrow = async () => {
-	const res = await AXIOS_INSTANCE.get(
-		`${END_POINT}/filter?tomorrow=${true}`,
-	);
-	return res.data;
+const filterTodoListByTomorrow = () => {
+	return AXIOS_INSTANCE.get(`${END_POINT}/filter?tomorrow=${true}`);
 };
 
-const filterTodoListByWeek = async () => {
-	const res = await AXIOS_INSTANCE.get(`${END_POINT}/filter?week=${true}`);
-	return res.data;
+const filterTodoListByWeek = () => {
+	return AXIOS_INSTANCE.get(`${END_POINT}/filter?week=${true}`);
 };
-const getTodoList = async id => {
-	const res = await AXIOS_INSTANCE.get(`${END_POINT}/${id}`);
-	return res.data;
+const getTodoList = id => {
+	return AXIOS_INSTANCE.get(`${END_POINT}/${id}`);
 };
 
-const createTodo = async (id, newTodo) => {
-	const res = await AXIOS_INSTANCE.post(`${END_POINT}/${id}`, newTodo);
-	return res.data;
+const createTodo = (id, newTodo) => {
+	return AXIOS_INSTANCE.post(`${END_POINT}/${id}`, newTodo);
 };
 
-const updateTodo = async (id, todo) => {
-	// const res = await AXIOS_INSTANCE.put(`${END_POINT}/${id}`, todo);
-	// return res.data;
+const updateTodo = (id, todo) => {
+	// return  AXIOS_INSTANCE.put(`${END_POINT}/${id}`, todo);
+	//
 	return AXIOS_INSTANCE.put(`${END_POINT}/${id}?check=${true}`, todo);
 };
 
-const deleteTodo = async id => {
-	const res = await AXIOS_INSTANCE.delete(`${END_POINT}/${id}`);
-	return res.data;
+const deleteTodo = id => {
+	return AXIOS_INSTANCE.delete(`${END_POINT}/${id}`);
 };
 
 const todoService = {

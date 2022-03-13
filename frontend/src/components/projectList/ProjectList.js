@@ -42,10 +42,6 @@ const ProjectList = () => {
 	const [showEdit, setShowEdit] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// const response = async () => {
-		// 	await dispatch(getProjectList());
-		// };
-		// response();
 		dispatch(getProjectList());
 	}, [dispatch, todo]);
 

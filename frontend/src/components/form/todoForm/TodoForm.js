@@ -74,9 +74,7 @@ const TodoForm = ({
 							<BsXLg />
 						</span>
 					</header>
-					<form
-						onSubmit={handleSubmit}
-						className='todoForm__container'>
+					<form className='todoForm__container'>
 						<main className='todoForm__main'>
 							<div className='todoForm__main--text'>
 								<input
@@ -198,7 +196,7 @@ const TodoForm = ({
 					</form>
 					<footer className='todoForm__footer'>
 						<button
-							type='submit'
+							onClick={handleSubmit}
 							disabled={allowAddForm ? false : true}
 							className={`todoForm__footer-button ${
 								!allowAddForm ? 'disabled' : ''

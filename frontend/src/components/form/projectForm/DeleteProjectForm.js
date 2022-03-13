@@ -10,11 +10,11 @@ const DeleteProjectForm = ({
 	handleShowEdit,
 }) => {
 	const dispatch = useDispatch();
-	const handleSubmitForm = async e => {
+	const handleSubmitForm = e => {
 		e.preventDefault();
-		setTimeout(async () => await dispatch(deleteProject(id)), 500);
-		await dispatch(setTodoList([]));
-		await dispatch(filterTodoList(id));
+		setTimeout(() => dispatch(deleteProject(id)), 500);
+		dispatch(setTodoList([]));
+		dispatch(filterTodoList(id));
 		setShowModal(false);
 		handleShowEdit();
 	};

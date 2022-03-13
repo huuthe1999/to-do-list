@@ -2,28 +2,23 @@ const { AXIOS_INSTANCE } = require('../../config/api');
 const END_POINT = '/projects';
 
 const getProjectList = async () => {
-	const res = await AXIOS_INSTANCE.get(END_POINT);
-	return res.data;
+	return await AXIOS_INSTANCE.get(END_POINT);
 };
 
 const getProject = async id => {
-	const res = await AXIOS_INSTANCE.get(`${END_POINT}?id=${id}`);
-	return res.data;
+	return await AXIOS_INSTANCE.get(`${END_POINT}?id=${id}`);
 };
 
 const createProject = async project => {
-	const res = await AXIOS_INSTANCE.post(END_POINT, project);
-	return res.data;
+	return await AXIOS_INSTANCE.post(END_POINT, project);
 };
 
 const updateProject = async (id, updatedProject) => {
-	const res = await AXIOS_INSTANCE.put(`${END_POINT}/${id}`, updatedProject);
-	return res.data;
+	return await AXIOS_INSTANCE.put(`${END_POINT}/${id}`, updatedProject);
 };
 
 const deleteProject = async id => {
-	const res = await AXIOS_INSTANCE.delete(`${END_POINT}/${id}`);
-	return res.data;
+	return await AXIOS_INSTANCE.delete(`${END_POINT}/${id}`);
 };
 
 const projectService = {

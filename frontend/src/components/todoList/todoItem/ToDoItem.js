@@ -61,7 +61,7 @@ const ToDoItem = ({ todo, nameProject }) => {
 						await dispatch(deleteTodo(todo._id)),
 					);
 					if (result) {
-						await dispatch(removeTodoFromProjectList(result.todo));
+						dispatch(removeTodoFromProjectList(result.todo));
 						Toast.fire({
 							icon: 'success',
 							title: result.message,

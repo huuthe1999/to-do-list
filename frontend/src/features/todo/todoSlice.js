@@ -14,7 +14,7 @@ export const filterTodoListByToday = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const res = await todoService.filterTodoListByToday();
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error?.response?.data?.message ||
@@ -30,7 +30,7 @@ export const filterTodoListByTomorrow = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const res = await todoService.filterTodoListByTomorrow();
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error?.response?.data?.message ||
@@ -46,7 +46,7 @@ export const filterTodoListByWeek = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const res = await todoService.filterTodoListByWeek();
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error?.response?.data?.message ||
@@ -62,7 +62,7 @@ export const getTodoList = createAsyncThunk(
 	async (id, thunkAPI) => {
 		try {
 			const res = await todoService.getTodoList(id);
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
@@ -78,7 +78,7 @@ export const createTodo = createAsyncThunk(
 	async ({ id, newTodo }, thunkAPI) => {
 		try {
 			const res = await todoService.createTodo(id, newTodo);
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
@@ -110,7 +110,7 @@ export const deleteTodo = createAsyncThunk(
 	async (id, thunkAPI) => {
 		try {
 			const res = await todoService.deleteTodo(id);
-			return res;
+			return res.data;
 		} catch (error) {
 			const message =
 				error.response?.data?.message ||
