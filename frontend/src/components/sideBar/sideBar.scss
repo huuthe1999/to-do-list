@@ -105,7 +105,7 @@
 	height: 60px;
 }
 
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
 	// .btn__toggle {
 	// 	display: block;
 	// }

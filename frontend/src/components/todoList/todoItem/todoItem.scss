@@ -2,7 +2,7 @@
 	height: 95px;
 	margin-bottom: 10px;
 	padding: 0.5rem 0.8rem;
-
+	z-index: -1;
 	// animation: zoomIn; /* referring directly to the animation's @keyframe declaration */
 	// animation-duration: 0.5s; /* don't forget to set a duration! */
 
@@ -78,6 +78,7 @@
 				top: 50%;
 				left: 0;
 				transition: width 0.3s ease-in-out;
+				z-index: -1;
 				&.line-through {
 					width: 100%;
 				}

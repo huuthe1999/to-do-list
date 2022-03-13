@@ -4,7 +4,19 @@
 	position: relative;
 	font-weight: initial;
 	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	height: 100%;
 
+	@media only screen and (max-width: 480px) and (max-width: 768px) and (orientation: landscape) {
+		overflow: auto;
+	}
+
+	&__container {
+		flex: 1;
+		overflow: hidden auto;
+	}
 	// &__close {
 	// 	position: absolute;
 	// 	right: 16px;
@@ -52,7 +64,7 @@
 		align-items: flex-start;
 		flex-direction: column;
 		padding: 5px 0px;
-
+		overflow-y: auto;
 		& > div {
 			width: 100%;
 		}

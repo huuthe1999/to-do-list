@@ -67,16 +67,16 @@ const TodoForm = ({
 	return (
 		<LocalizationProvider dateAdapter={DateAdapter}>
 			<ThemeProvider theme={materialTheme}>
-				<section className='todoForm'>
-					<form onSubmit={handleSubmit}>
-						<header className='todoForm__header'>
-							{titleForm && <h3>{titleForm}</h3>}
-							<span
-								className='todoForm__close'
-								onClick={setShowModal}>
-								<BsXLg />
-							</span>
-						</header>
+				<div className='todoForm'>
+					<header className='todoForm__header'>
+						{titleForm && <h3>{titleForm}</h3>}
+						<span onClick={setShowModal}>
+							<BsXLg />
+						</span>
+					</header>
+					<form
+						onSubmit={handleSubmit}
+						className='todoForm__container'>
 						<main className='todoForm__main'>
 							<div className='todoForm__main--text'>
 								<input
@@ -195,25 +195,25 @@ const TodoForm = ({
 								</div>
 							</div>
 						</main>
-						<footer className='todoForm__footer'>
-							<button
-								type='submit'
-								disabled={allowAddForm ? false : true}
-								className={`todoForm__footer-button ${
-									!allowAddForm ? 'disabled' : ''
-								}`}>
-								{textButton}
-							</button>
-							<button
-								className='todoForm__footer-button'
-								onClick={() => {
-									setShowModal();
-								}}>
-								Cancel
-							</button>
-						</footer>
 					</form>
-				</section>
+					<footer className='todoForm__footer'>
+						<button
+							type='submit'
+							disabled={allowAddForm ? false : true}
+							className={`todoForm__footer-button ${
+								!allowAddForm ? 'disabled' : ''
+							}`}>
+							{textButton}
+						</button>
+						<button
+							className='todoForm__footer-button'
+							onClick={() => {
+								setShowModal();
+							}}>
+							Cancel
+						</button>
+					</footer>
+				</div>
 			</ThemeProvider>
 		</LocalizationProvider>
 	);

@@ -26,11 +26,17 @@ const customStyles = {
 	menu: provided => ({
 		...provided,
 		width: 'auto',
+		backgroundColor: '#fff',
+	}),
+	menuPortal: provided => ({
+		...provided,
 	}),
 	option: (provided, state) => ({
 		...provided,
 		color: state.isSelected ? 'red' : 'inherit',
 		padding: 20,
+		fontWeight: state.isSelected ? 'bold' : 'normal',
+		fontSize: state.isSelected ? '1.2em' : '1em',
 		backgroundColor: state.isSelected
 			? '#eeeeee'
 			: state.isFocused
@@ -126,6 +132,7 @@ const TodoList = () => {
 									damping: 15,
 								}}>
 								<Select
+									menuPortalTarget={document.body}
 									onChange={handleFilter}
 									isSearchable={false}
 									defaultValue={option}
