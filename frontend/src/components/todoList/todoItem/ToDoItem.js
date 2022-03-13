@@ -172,13 +172,15 @@ const ToDoItem = ({ todo, nameProject }) => {
 										todo.checked ? 'active' : ''
 									}></div>
 							</h4>
-							{todo.description && <p>{todo.description}</p>}
-							<span>
-								{dateFormat} - {timeFormat} -{' '}
-								{todo.nameProject
-									? todo.nameProject
-									: nameProject}
-							</span>
+							<div className='todoItem__container--content--description'>
+								{todo.description && <p>{todo.description}</p>}
+								<span>
+									{dateFormat} - {timeFormat} -{' '}
+									{todo.nameProject
+										? todo.nameProject
+										: nameProject}
+								</span>
+							</div>
 						</div>
 						{/* 
 						{todo.checked && (

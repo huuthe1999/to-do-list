@@ -38,14 +38,23 @@
 			margin: 10px;
 			flex: 1;
 
-			& > h4,
-			& > p {
+			&--description {
+				max-height: 40px;
+				& > p,
+				& > span {
+					display: block;
+					word-break: break-all;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+				}
+			}
+
+			& > h4 {
 				word-break: break-all;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				overflow: hidden;
-			}
-			& > h4 {
 				position: relative;
 				font-size: 20px;
 				& > div {

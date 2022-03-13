@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import emptyData from '../../../assets/images/empty.png';
 const EmptyData = () => {
 	return (
 		<motion.div
@@ -9,7 +8,7 @@ const EmptyData = () => {
 			}}
 			animate={{
 				opacity: 1,
-				scale: 1,
+				scale: 0.9,
 			}}
 			transition={{
 				type: 'spring',
@@ -19,28 +18,23 @@ const EmptyData = () => {
 			}}
 			style={{
 				width: '100%',
-				height: '100%',
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
+				height: '95px',
+				backgroundColor: '#fff',
+				color: '#000',
+				marginTop: '20px',
+				borderRadius: '5px',
+				boxShadow: ' -2px 1px 12px 3px rgba(84, 82, 82, 0.75)',
+				WebkitBoxShadow: '-2px 1px 12px 3px rgba(84, 82, 82, 0.75)',
+				MozBoxShadow: '-2px 1px 12px 3px rgba(84, 82, 82, 0.75)',
 			}}>
-			<img
-				style={{
-					display: 'block',
-					width: '60%',
-					height: '80%',
-					margin: 'auto',
-				}}
-				src={emptyData}
-				alt='No data'
-			/>
 			<h2
 				style={{
-					flex: 1,
-					color: '#fff',
+					textAlign: 'center',
+					width: '100%',
+					height: '100%',
+					lineHeight: '95px',
 				}}>
-				No data
+				No todo
 			</h2>
 		</motion.div>
 	);

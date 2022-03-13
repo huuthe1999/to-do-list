@@ -21,7 +21,7 @@ const calendarItem = {
 		x: 0,
 	},
 };
-const CalendarItem = ({ item, index }) => {
+const CalendarItem = ({ item, toggleOpen }) => {
 	const dispatch = useDispatch();
 	const todoListByToday = useSelector(selectTodoListByToday);
 	const todoListByTomorrow = useSelector(selectTodoListByTomorrow);
@@ -33,6 +33,11 @@ const CalendarItem = ({ item, index }) => {
 			: item.name === defaultTodoList[1]
 			? todoListByTomorrow.length
 			: todoListByDay.length;
+
+	const handleClick = () => {
+		dispatch(setSelectProject(item.name));
+		toggleOpen();
+	};
 	return (
 		<motion.li
 			variants={calendarItem}
@@ -48,7 +53,7 @@ const CalendarItem = ({ item, index }) => {
 			style={{
 				backgroundColor: project === item.name ? '#6accbc' : undefined,
 			}}
-			onClick={() => dispatch(setSelectProject(item.name))}
+			onClick={handleClick}
 			className='calendar__content--item'>
 			<span className='calendar__content--item-icon'>{item.icon}</span>
 			<p>{item.name}</p>

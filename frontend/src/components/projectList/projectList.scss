@@ -1,9 +1,9 @@
 .projectList {
 	--font-size-label: 20px;
-	margin-top: 12px;
+	margin: 10px 0px;
 	display: flex;
 	flex-direction: column;
-	max-height: calc(100% - 210px);
+	// max-height: calc(100% - 210px);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
 	border-radius: 10px;
 	overflow: hidden;
@@ -58,7 +58,7 @@
 		flex: 1;
 		display: flex;
 		padding: 0 10px;
-		overflow: hidden scroll;
+		overflow: hidden auto;
 		&--list {
 			width: 95%;
 			height: fit-content;

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
 import {
 	IoCalendarClearOutline,
@@ -8,6 +8,7 @@ import {
 	IoTodayOutline,
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToggleContext } from '../../contexts/toggleContext';
 import {
 	filterTodoListByToday,
 	filterTodoListByTomorrow,
@@ -77,6 +78,7 @@ const calendarContainer = {
 	},
 };
 const Calendar = () => {
+	const { toggleOpen } = useContext(ToggleContext);
 	const dispatch = useDispatch();
 	const [showMenu, setShowMenu] = useState(true);
 	const todo = useSelector(selectTodo);
@@ -130,11 +132,11 @@ const Calendar = () => {
 			<div className='calendar__content'>
 				<ul className='calendar__content--list'>
 					<AnimatePresence>
-						{calendarList.map((item, index) => (
+						{calendarList.map(item => (
 							<CalendarItem
 								key={item.id}
-								index={index}
 								item={item}
+								toggleOpen={toggleOpen}
 							/>
 						))}
 					</AnimatePresence>

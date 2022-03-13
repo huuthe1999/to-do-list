@@ -25,7 +25,7 @@ const item = {
 	}),
 };
 
-const ProjectItem = ({ project, edit, handleShowEdit, index }) => {
+const ProjectItem = ({ project, edit, handleShowEdit, index, toggleOpen }) => {
 	const projectSelected = useSelector(selectProject);
 	const dispatch = useDispatch();
 	const [showModal, setShowModal] = useState(false);
@@ -33,6 +33,11 @@ const ProjectItem = ({ project, edit, handleShowEdit, index }) => {
 	const handleShowModal = value => {
 		setIsDeleteForm(value);
 		setShowModal(true);
+	};
+
+	const handleClick = () => {
+		dispatch(setSelectProject(project));
+		toggleOpen();
 	};
 
 	useEffect(() => {
@@ -66,9 +71,7 @@ const ProjectItem = ({ project, edit, handleShowEdit, index }) => {
 				<span
 					className='projectList__content--item-icon'
 					style={{ backgroundColor: project.color.color }}></span>
-				<p onClick={() => dispatch(setSelectProject(project))}>
-					{project.name}
-				</p>
+				<p onClick={handleClick}>{project.name}</p>
 				<div className='projectList__content--item-content'>
 					<AnimatePresence>
 						{edit ? (

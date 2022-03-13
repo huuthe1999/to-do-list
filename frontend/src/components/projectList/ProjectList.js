@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BsCaretUp } from 'react-icons/bs';
 import { IoColorPaletteOutline, IoPencil } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToggleContext } from '../../contexts/toggleContext';
 import {
 	getProjectList,
 	selectProjectList,
@@ -34,6 +35,7 @@ const listContainer = {
 };
 
 const ProjectList = () => {
+	const { toggleOpen } = useContext(ToggleContext);
 	const projectList = useSelector(selectProjectList);
 	const todo = useSelector(selectTodo);
 	const [showMenu, setShowMenu] = useState(true);
@@ -125,6 +127,7 @@ const ProjectList = () => {
 								project={project}
 								edit={showEdit}
 								handleShowEdit={handleShowEdit}
+								toggleOpen={toggleOpen}
 							/>
 						))}
 					</AnimatePresence>

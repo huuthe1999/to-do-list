@@ -1,5 +1,4 @@
 import { unwrapResult } from '@reduxjs/toolkit';
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { RiAddLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,20 +14,6 @@ import { createTodo } from '../../../features/todo/todoSlice';
 import { randomColor } from '../../../helpers/randomColor';
 import Modal from '../../modal/Modal';
 import TodoForm from './TodoForm';
-
-const animation = {
-	hidden: { x: '100%', opacity: 0 },
-	show: {
-		x: 0,
-		opacity: 1,
-		transition: {
-			type: 'spring',
-			stiffness: 300,
-			damping: 15,
-			duration: 0.2,
-		},
-	},
-};
 
 const AddTodoForm = () => {
 	const projectList = useSelector(selectProjectList);
@@ -95,26 +80,9 @@ const AddTodoForm = () => {
 	};
 	return (
 		<>
-			<motion.button
-				onClick={() => setShowModal(true)}
-				initial='hidden'
-				animate='show'
-				variants={animation}
-				whileTap={{
-					scale: 0.9,
-				}}
-				whileHover={{
-					scale: 1.05,
-					filter: 'brightness(1.2)',
-					boxShadow: '0px 0px 10px rgb(0,0,0,0.5)',
-				}}>
-				<RiAddLine
-					size='24px'
-					color='#fff'
-					style={{ marginRight: '5px' }}
-				/>
-				Add todo
-			</motion.button>
+			<button className='main__addBtn' onClick={() => setShowModal(true)}>
+				<RiAddLine size={30} color='#fff' />
+			</button>
 			{/* <button className='topbar__button rightControl'>
 				<RiAddLine
 					title='Add new todo'
