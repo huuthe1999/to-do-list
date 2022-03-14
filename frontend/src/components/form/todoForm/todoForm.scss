@@ -1,0 +1,213 @@
+.todoForm {
+	--font-size-label: 20px;
+	background-color: transparent;
+	position: relative;
+	font-weight: initial;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	height: 100%;
+
+	@media only screen and (max-width: 480px) and (max-width: 768px) and (orientation: landscape) {
+		overflow: auto;
+	}
+
+	&__container {
+		overflow: hidden auto;
+
+		padding: 15px 0 0;
+	}
+	// &__close {
+	// 	position: absolute;
+	// 	right: 16px;
+	// 	top: 16px;
+	// 	width: 24px;
+	// 	height: 24px;
+	// 	text-align: center;
+	// 	cursor: pointer;
+	// 	padding: 2px;
+	// 	font-size: var(--font-size-label);
+	// 	border-radius: 3px;
+	// 	&:hover {
+	// 		background-color: #eee;
+	// 	}
+	// }
+	&__header {
+		z-index: 1;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 8px 16px;
+		margin: 0px -16px;
+		border-bottom: 1px solid black;
+		font-size: 24px;
+
+		& > span {
+			display: flex;
+			justify-content: center;
+			flex-shrink: 0;
+			width: 24px;
+			height: 24px;
+			align-items: center;
+			cursor: pointer;
+			padding: 2px;
+			font-size: var(--font-size-label);
+			border-radius: 3px;
+			&:hover {
+				background-color: #eee;
+			}
+		}
+	}
+
+	&__main {
+		max-height: fit-content;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-direction: column;
+		padding: 5px 0px;
+		overflow-y: auto;
+		& > div {
+			width: 100%;
+		}
+
+		&--text {
+			display: flex;
+			flex-direction: column;
+			padding: 12px 12px;
+
+			& > input,
+			& > textarea {
+				padding: 5px;
+				border-radius: 5px;
+				outline: none;
+
+				border: 2px solid;
+				border-color: transparent;
+				transition: border-color 0.2s ease-in-out;
+				&:focus {
+					border-color: #036eda;
+				}
+			}
+
+			& > input {
+				font-size: 1rem;
+				font-weight: 500;
+				margin-bottom: 10px;
+			}
+
+			& > textarea {
+				font-family: inherit;
+				font-size: 16px;
+			}
+		}
+
+		&--remind {
+			display: flex;
+			align-items: center;
+			padding: 12px 0px;
+			font-size: var(--font-size-label);
+
+			& p {
+				margin-left: 10px;
+			}
+		}
+
+		&--pickDay,
+		&--pickTime {
+			font-size: var(--font-size-label);
+			padding: 12px 32px;
+			width: 100%;
+			&-title {
+				display: flex;
+				& p {
+					margin-left: 10px;
+				}
+			}
+		}
+
+		&--tag {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			&-title {
+				display: flex;
+				align-items: center;
+				margin-bottom: 5px;
+				font-size: var(--font-size-label);
+
+				& p {
+					margin-left: 10px;
+				}
+			}
+
+			&-list {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				padding: 12px 32px;
+				font-size: 16px;
+				max-height: 150px;
+				max-width: 100%;
+				overflow: auto;
+				& div {
+					border: 1px solid #0080ff;
+					border-radius: 5px;
+					padding: 5px;
+					margin: 5px;
+					cursor: pointer;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+
+					text-align: center;
+					transition: color background-color 0.2s ease-in-out;
+					&.active {
+						color: #fff;
+						background-color: #0080ff;
+					}
+				}
+			}
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: wrap;
+		padding: 12px 16px 0px;
+		margin: 0px -16px;
+		border-top: 1px solid black;
+
+		&-button {
+			margin: 0px 12px;
+			display: flex;
+			align-items: center;
+			height: 100%;
+			padding: 8px;
+			color: #fff;
+			border-radius: 5px;
+
+			&:first-child {
+				background-color: #0091ea;
+				opacity: 1;
+				filter: none;
+				&.disabled {
+					cursor: not-allowed;
+					opacity: 0.6;
+				}
+			}
+			&:not(:first-child) {
+				background-color: transparent;
+				color: rgb(0, 0, 0);
+				border: 1px solid black;
+				&:hover {
+					background-color: #bebebe;
+				}
+			}
+		}
+	}
+}

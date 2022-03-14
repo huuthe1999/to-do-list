@@ -1,0 +1,134 @@
+.projectForm {
+	--font-size-label: 20px;
+	background-color: transparent;
+	position: relative;
+	text-transform: capitalize;
+	padding: 16px;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 8px 16px;
+		margin: 0px -16px;
+		border-bottom: 1px solid black;
+		font-size: 24px;
+
+		& > span {
+			display: flex;
+			justify-content: center;
+			flex-shrink: 0;
+			width: 24px;
+			height: 24px;
+			align-items: center;
+			cursor: pointer;
+			padding: 2px;
+			font-size: var(--font-size-label);
+			border-radius: 3px;
+			&:hover {
+				background-color: #eee;
+			}
+		}
+	}
+
+	&__main {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-direction: column;
+		margin-bottom: 15px;
+		height: 100%;
+
+		& > div {
+			width: 100%;
+		}
+
+		&--text {
+			display: flex;
+			flex-direction: column;
+			padding: 0px 12px;
+
+			& > input {
+				border: 1px solid #ddd;
+				border-radius: 5px;
+				outline: none;
+				height: 35px;
+				padding-left: 4px;
+				transition: box-shadow border 0.3s ease;
+
+				&:focus {
+					border-color: transparent;
+					box-shadow: 0 0 0 1px #1f60c2, 0 0 0 4px #dceaff;
+				}
+			}
+
+			& > input {
+				font-size: 20px;
+				font-weight: 500;
+			}
+		}
+
+		&--title {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			padding: 12px 0px;
+			font-size: var(--font-size-label);
+
+			& p {
+				margin-left: 10px;
+			}
+		}
+
+		&--pickColorWrapper {
+			padding: 12px;
+		}
+		&--pickColor {
+			transition: all 0.2s ease-in;
+			&.active {
+				height: 160px;
+				margin-bottom: 30px;
+			}
+		}
+	}
+
+	&__footer {
+		background-color: #fff;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: wrap;
+		padding: 12px 16px 0px;
+		margin: 0px -16px;
+		border-top: 1px solid black;
+
+		&-button {
+			margin: 0px 12px;
+			border-radius: 5px;
+			border: 1px solid transparent;
+			padding: 5px;
+			color: #fff;
+			&:first-child {
+				background-color: #0091ea;
+				opacity: 1;
+
+				&:hover {
+					filter: brightness(120%);
+				}
+				&.disabled {
+					filter: none;
+					cursor: not-allowed;
+					opacity: 0.6;
+				}
+			}
+			&:last-child {
+				background-color: transparent;
+				color: rgb(0, 0, 0);
+				border: 1px solid rgb(37, 37, 37);
+				&:hover {
+					background-color: #bebebe;
+				}
+			}
+		}
+	}
+}
