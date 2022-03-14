@@ -85,9 +85,9 @@ exports.createTodo = asyncHandler(async (req, res) => {
 });
 
 exports.updateTodo = asyncHandler(async (req, res) => {
-	const { check } = req.query;
 	const { tId } = req.params;
 	const newTodo = req.body;
+
 	if (!tId) {
 		return res.status(400).json({
 			message: 'You must provide a id todo',
@@ -99,7 +99,11 @@ exports.updateTodo = asyncHandler(async (req, res) => {
 			message: 'You must provide a project',
 		});
 	}
-	let beforeTodo, updatedTodo;
+
+	const oldProjectId = newTodo.oldProjectId;
+	delete newTodo.oldProjectId;
+
+	let updatedTodo;
 
 	try {
 		updatedTodo = await Todo.findOneAndUpdate({ _id: tId }, newTodo, {
@@ -108,31 +112,27 @@ exports.updateTodo = asyncHandler(async (req, res) => {
 	} catch (err) {
 		return res.status(400).json({ message: 'You provide a wrong id todo' });
 	}
-	if (check) {
-		return res.status(200).json(updatedTodo);
-	}
-	try {
-		beforeTodo = await Todo.findById(tId);
-	} catch (error) {
-		return res.status(400).json({ message: 'Error get todo' });
-	}
 
 	if (!updatedTodo) {
 		return res.status(404).json({ message: 'Update todo failed' });
 	}
-	if (beforeTodo.projectId !== updatedTodo.projectId) {
+
+	if (oldProjectId === newTodo.projectId) {
+		return res.status(200).json(updatedTodo);
+	} else {
 		try {
-			await Project.findByIdAndUpdate(beforeTodo.projectId, {
-				$pull: { todoListId: tId },
-			});
-			await Project.findByIdAndUpdate(updatedTodo.projectId, {
+			await Project.findByIdAndUpdate(newTodo.projectId, {
 				$push: { todoListId: tId },
+			});
+			await Project.findByIdAndUpdate(oldProjectId, {
+				$pull: { todoListId: tId },
 			});
 		} catch (error) {
 			return res.status(400).json({ message: 'Update project failed' });
 		}
+
+		return res.status(200).json(updatedTodo);
 	}
-	res.status(200).json(updatedTodo);
 });
 
 exports.deleteTodo = asyncHandler(async (req, res) => {
